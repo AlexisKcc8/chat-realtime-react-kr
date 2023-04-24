@@ -1,0 +1,97 @@
+.container-form,
+.form-register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container-form {
+  background-color: aliceblue;
+  width: 20rem;
+  padding: 3rem;
+  border-radius: 10px;
+  margin: 2rem 0 0 0;
+  .form-register {
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    input {
+      width: 100%;
+      border: none;
+      padding: 1rem;
+      outline: none;
+      background-color: transparent;
+      border-bottom: 1px solid #000;
+      color: #000;
+    }
+    button {
+      width: 100%;
+      padding: 0.5rem;
+      font-weight: bold;
+      background-color: aqua;
+      border: none;
+    }
+    .container-label-file-avatar {
+      width: 100%;
+      display: flex;
+
+      .label-file-avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        img {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+  }
+
+  .social-media-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0 0 0;
+    p {
+      margin: 0;
+    }
+    .button-social-media {
+      width: 3rem;
+      height: 3rem;
+      overflow: hidden;
+      object-fit: cover;
+      background-color: transparent;
+      border: none;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .message-register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    button {
+      background-color: transparent;
+      padding: 0.2rem;
+      color: blue;
+      text-decoration: underline;
+      border: none;
+    }
+  }
+}
+//Pseudoclasses
+.form-register > button:hover,
+.message-register > button,
+.social-media-register > section > button,
+.label-file-avatar {
+  cursor: pointer;
+}

@@ -1,0 +1,31 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: rgba(0, 225, 255, 0.533);
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.container-fluid {
+  background-color: #ff0000;
+}
