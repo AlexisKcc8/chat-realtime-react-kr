@@ -1,97 +1,170 @@
-.container-form,
-.form-register {
+@mixin box-flex(
+  $direction: row,
+  $alingHorizontal: center,
+  $alingVertical: center,
+  $gap: 0.5em
+) {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: $direction;
+  justify-content: $alingHorizontal;
+  align-items: $alingVertical;
+  gap: $gap;
 }
-.container-form {
-  background-color: aliceblue;
-  width: 20rem;
-  padding: 3rem;
-  border-radius: 10px;
-  margin: 2rem 0 0 0;
-  .form-register {
-    gap: 1rem;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    input {
-      width: 100%;
-      border: none;
-      padding: 1rem;
-      outline: none;
-      background-color: transparent;
-      border-bottom: 1px solid #000;
-      color: #000;
+$width-elements: 85%;
+.container-singin {
+  // background-color: red;
+  font-size: 1.5rem;
+  .container-hero {
+    background-color: var(--bg-color-secondary);
+    @include box-flex($direction: column);
+    padding: 0.7em 0;
+    color: var(--color-text-secondary);
+    &__img-avatar {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      border: 5px solid var(--color-text-secondary);
     }
-    button {
-      width: 100%;
-      padding: 0.5rem;
+    &__title {
       font-weight: bold;
-      background-color: aqua;
-      border: none;
+      font-size: 1.7em;
     }
-    .container-label-file-avatar {
-      width: 100%;
-      display: flex;
+  }
 
-      .label-file-avatar {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5rem;
-        img {
-          width: 2rem;
-          height: 2rem;
+  .container-form {
+    @include box-flex($direction: column);
+    padding: 1em 0 0 0;
+    color: var(--color-text-thirty);
+    &__wrapper-input {
+      position: relative;
+      width: $width-elements;
+      .container-form__img-input {
+        color: var(--color-text-thirty);
+        position: absolute;
+        width: 1em;
+        height: 2em;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .container-form__input {
+        box-sizing: border-box;
+        color: #191919;
+        padding: 1em 1.8em;
+        width: 100%;
+        font-size: 0.7em;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid var(--bg-color-secondary);
+        color: var(--color-text-thirty);
+      }
+      .container-form__input--password {
+        padding: 1em 0;
+      }
+      .container-form__img-input--password {
+        left: unset;
+        right: 12px;
+      }
+      .container-form__img-input--password:hover {
+        cursor: pointer;
+      }
+    }
+
+    &__label-avatar {
+      @include box-flex($alingHorizontal: flex-start);
+      width: $width-elements;
+      .container-form__img-add-avatar {
+        width: 2rem;
+        height: 2rem;
+      }
+      .container-form__msg-add-avatar {
+        font-size: 0.7em;
+      }
+    }
+    &__label-avatar:hover {
+      cursor: pointer;
+    }
+    &__form-button {
+      background-color: var(--bg-color-secondary);
+      width: $width-elements;
+      padding: 0.8em;
+      margin: 1em 0 0 0;
+      font-size: 0.7em;
+      border-radius: 10px;
+      border: none;
+      color: var(--color-text-secondary);
+    }
+    &__form-button:hover {
+      cursor: pointer;
+    }
+  }
+
+  .container-social-media {
+    @include box-flex($direction: column);
+    &__container-message {
+      @include box-flex;
+      width: $width-elements;
+      position: relative; /* Para que los pseudo-elementos se posicionen dentro del contenedor */
+      padding: 0 20px;
+      margin: 1em 0 0 0;
+      &::before,
+      &::after {
+        content: ""; /* Necesario para que los pseudo-elementos se muestren */
+        position: absolute; /* Para que los pseudo-elementos se posicionen con respecto al contenedor */
+        top: 50%; /* Para que los pseudo-elementos se posicionen en el centro vertical del contenedor */
+        border-top: 1px solid #4949498a; /* Agrega una línea sólida de 1 píxel de ancho */
+        width: 4em; /* Ajusta el ancho de las líneas a tu gusto */
+      }
+      &::before {
+        left: 1em;
+      }
+      &::after {
+        right: 1em;
+      }
+      .container-social-media__message {
+        font-size: 0.7em;
+        color: #4949498a;
+      }
+    }
+
+    &__container-buttons {
+      // background-color: blue;
+      overflow: hidden;
+      @include box-flex;
+      .container-social-media__button {
+        width: 4rem;
+        height: 4rem;
+        @include box-flex;
+        border-radius: 50%;
+        border: 1px solid var(--bg-color-secondary);
+        background-color: transparent;
+        overflow: hidden;
+        .container-social-media__button-img {
+          width: 50%;
+          height: 100%;
         }
       }
+      .container-social-media__button:hover {
+        cursor: pointer;
+      }
     }
-  }
+    &__container-message-account {
+      // background-color: red;
+      @include box-flex;
+      padding: 0 0 1em 0;
+      font-size: 0.7em;
+      color: var(--color-text-thirty);
+      .container-social-media__change-view-login {
+        border: none;
+        background-color: transparent;
+        font-weight: bold;
 
-  .social-media-register {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin: 1rem 0 0 0;
-    p {
-      margin: 0;
-    }
-    .button-social-media {
-      width: 3rem;
-      height: 3rem;
-      overflow: hidden;
-      object-fit: cover;
-      background-color: transparent;
-      border: none;
-      img {
-        width: 100%;
-        height: 100%;
+        font-size: 0.9em;
+        color: var(--color-text-thirty);
+      }
+      .container-social-media__change-view-login:hover {
+        cursor: pointer;
       }
     }
   }
-
-  .message-register {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-
-    button {
-      background-color: transparent;
-      padding: 0.2rem;
-      color: blue;
-      text-decoration: underline;
-      border: none;
-    }
-  }
-}
-//Pseudoclasses
-.form-register > button:hover,
-.message-register > button,
-.social-media-register > section > button,
-.label-file-avatar {
-  cursor: pointer;
 }

@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { auth, provider } from "../firebase/firebase-config";
 import { signInWithPopup } from "firebase/auth";
 
 import "../styles/SingIn.scss";
+const TYPES_INPUTS_FORM = {
+  PASSWORD: "password",
+  TEXT: "text",
+  FILE: "file",
+};
 export const SingIn = () => {
   const [viewLogin, setViewLogin] = useState(true);
+  const [showTextPassword, setShowTextPassword] = useState(false);
+  const inputPws = useRef();
   const changeViewRegister = () => {
     setViewLogin(!viewLogin);
   };
@@ -12,51 +19,147 @@ export const SingIn = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider);
   };
-  return (
-    <section className="container-form">
-      <h2>KR - CHAT🧢</h2>
-      <h4>{!viewLogin ? "Register" : "Login"}</h4>
-      <form className="form-register">
-        {!viewLogin ? (
-          <input type="text" name="" id="" placeholder="UserName" />
-        ) : null}
 
-        <input type="email" name="" id="" placeholder="Email" />
-        <input type="password" name="" id="" placeholder="Password" />
+  const showTextInputPassword = () => {
+    let typeInput = inputPws.current.type;
+    if (typeInput === TYPES_INPUTS_FORM.PASSWORD) {
+      inputPws.current.type = TYPES_INPUTS_FORM.TEXT;
+      setShowTextPassword(true);
+    } else {
+      inputPws.current.type = TYPES_INPUTS_FORM.PASSWORD;
+      setShowTextPassword(false);
+    }
+  };
+  return (
+    <section className="container-singin">
+      <section className="container-hero">
+        <img
+          className="container-hero__img-avatar"
+          src="/images/my-avatar.jpg"
+          alt="imagen-avatar"
+        />
+        <h3 className="container-hero__title">CodeChat</h3>
+      </section>
+
+      <form className="container-form">
+        <h3 className="container-form__message-info">
+          {viewLogin ? "Login" : "Create a New Account"}
+        </h3>
+        {viewLogin ? null : (
+          <div className="container-form__wrapper-input">
+            <img
+              className="container-form__img-input"
+              src="/icons/icon-username.svg"
+              alt="icon-username"
+            />
+            <input
+              className="container-form__input"
+              type="text"
+              required
+              placeholder="UserName"
+            />
+          </div>
+        )}
+        <div className="container-form__wrapper-input">
+          <img
+            className="container-form__img-input"
+            src="/icons/icon-email.svg"
+            alt="icon-email"
+          />
+          <input
+            className="container-form__input"
+            type="email"
+            required
+            placeholder="Email"
+            name=""
+            id=""
+          />
+        </div>
+        <div className="container-form__wrapper-input">
+          {showTextPassword ? (
+            <img
+              onClick={showTextInputPassword}
+              className="container-form__img-input container-form__img-input--password"
+              src="/icons/icon-close-pws.svg"
+              alt="icon-password-close"
+            />
+          ) : (
+            <img
+              onClick={showTextInputPassword}
+              className="container-form__img-input container-form__img-input--password"
+              src="/icons/icon-open-pws.svg"
+              alt="icon-password"
+            />
+          )}
+
+          <input
+            ref={inputPws}
+            className="container-form__input container-form__input--password"
+            type="password"
+            required
+            placeholder="Password"
+            name=""
+            id=""
+          />
+        </div>
+
         <input
+          className="container-form__input"
+          style={{ display: "none" }}
           type="file"
           name=""
-          id="input-avatar"
-          placeholder="file"
-          style={{ display: "none" }}
+          id="input-file-avatar"
         />
-        {!viewLogin ? (
-          <section className="container-label-file-avatar">
-            <label htmlFor="input-avatar" className="label-file-avatar">
-              <img src="/icons/add-avatar-svg.svg" alt="" />
-              <p>Add an avatar</p>
-            </label>
-          </section>
-        ) : null}
-
-        <button>Sing up</button>
+        {viewLogin ? null : (
+          <label
+            className="container-form__label-avatar"
+            htmlFor="input-file-avatar"
+          >
+            <img
+              className="container-form__img-add-avatar"
+              src="/icons/add-avatar-svg.svg"
+              alt="icono-añadir-avatar"
+            />
+            <p className="container-form__msg-add-avatar">Add an avatar</p>
+          </label>
+        )}
+        <button className="container-form__form-button">Sing Up</button>
       </form>
-      <section className="social-media-register">
-        <p>Do you prefer a social network?</p>
-        <section>
-          <button className="button-social-media" onClick={signInWithGoogle}>
-            <img src="/icons/google-svg.svg" alt="icon-google" />
+
+      <section className="container-social-media">
+        <article className="container-social-media__container-message">
+          <p className="container-social-media__message">or signup with</p>
+        </article>
+        <article className="container-social-media__container-buttons">
+          <button className="container-social-media__button">
+            <img
+              className="container-social-media__button-img"
+              src="/icons/facebook-svg.svg"
+              alt="logo-facebook"
+            />
           </button>
-          <button className="button-social-media">
-            <img src="/icons/facebook-svg.svg" alt="icon-facebook" />
+          <button
+            className="container-social-media__button"
+            onClick={signInWithGoogle}
+          >
+            <img
+              className="container-social-media__button-img"
+              src="/icons/google-svg.svg"
+              alt="logo-google"
+            />
           </button>
-        </section>
-      </section>
-      <section className="message-register">
-        <p>You {!viewLogin ? "do" : "don't"} have a account?</p>
-        <button onClick={changeViewRegister}>
-          {!viewLogin ? "Login" : "Register"}
-        </button>
+        </article>
+        <article className="container-social-media__container-message-account">
+          <p className="container-social-media__message-account">
+            {viewLogin ? "You don't" : "Already"} have an account?
+          </p>
+          <button
+            onClick={changeViewRegister}
+            className="container-social-media__change-view-login"
+          >
+            {viewLogin ? "Register" : "Login"} Here
+          </button>
+        </article>
       </section>
     </section>
   );
