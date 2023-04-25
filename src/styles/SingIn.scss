@@ -10,9 +10,9 @@
   align-items: $alingVertical;
   gap: $gap;
 }
-$width-elements: 85%;
+
 .container-singin {
-  // background-color: red;
+  $width-elements: 85%;
   font-size: 1.5rem;
   .container-hero {
     background-color: var(--bg-color-secondary);
@@ -25,9 +25,17 @@ $width-elements: 85%;
       border-radius: 50%;
       border: 5px solid var(--color-text-secondary);
     }
-    &__title {
-      font-weight: bold;
-      font-size: 1.7em;
+    &__container-title-autor {
+      @include box-flex($direction: column, $gap: 0);
+      .container-hero__title {
+        font-weight: bold;
+        font-size: 1.7em;
+        margin: 0;
+      }
+      .container-hero__name-autor {
+        font-size: 0.7em;
+        color: var(--color-text-secondary);
+      }
     }
   }
 
@@ -164,6 +172,39 @@ $width-elements: 85%;
       }
       .container-social-media__change-view-login:hover {
         cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) and (orientation: landscape) {
+  .container-singin {
+    $width-elements: 65%;
+    font-size: 1.8rem;
+    .container-hero {
+      @include box-flex($direction: row);
+      &__container-title-autor {
+        @include box-flex(
+          $direction: column,
+          $gap: 0,
+          $alingVertical: flex-start
+        );
+      }
+    }
+    .container-form {
+      &__wrapper-input,
+      &__label-avatar,
+      &__form-button {
+        width: 40%;
+      }
+    }
+    .container-social-media {
+      &__container-message {
+        width: 40%;
+        &::before,
+        &::after {
+          width: 7em;
+        }
       }
     }
   }

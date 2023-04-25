@@ -38,7 +38,10 @@ export const SingIn = () => {
           src="/images/my-avatar.jpg"
           alt="imagen-avatar"
         />
-        <h3 className="container-hero__title">CodeChat</h3>
+        <article className="container-hero__container-title-autor">
+          <h3 className="container-hero__title">CodeChat</h3>
+          <span className="container-hero__name-autor">By: AlexisKR🧢</span>
+        </article>
       </section>
 
       <form className="container-form">
