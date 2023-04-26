@@ -1,0 +1,55 @@
+@import "./partials/variables";
+@import "./partials/box-flex";
+
+.side-contacts {
+  min-height: 100vh;
+  overflow: hidden;
+  @include box-flex($direction: column, $gap: 0);
+  .header {
+    background-color: $color-text-thirty;
+    color: $color-text-secondary;
+    width: 100%;
+
+    &__section-title-and-icons {
+      padding: 1em;
+      @include box-flex($alingHorizontal: space-between);
+      .title-header {
+        font-size: 1.5em;
+      }
+      .header__section-button-icons {
+        @include box-flex;
+        .header__section-button-icon {
+          border: none;
+          background-color: transparent;
+        }
+        .header__section-button-icon:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .container-chats {
+    background-color: rgb(255, 255, 255);
+    flex-grow: 1;
+    article {
+      min-height: 28rem;
+      max-height: 30rem;
+      overflow: auto;
+    }
+  }
+
+  .container-toolbar {
+    width: 100%;
+    @include box-flex($alingHorizontal: space-around);
+
+    .button-toolbar {
+      background-color: transparent;
+      border: none;
+      padding: 0.8em;
+    }
+    .button-toolbar :hover {
+      cursor: pointer;
+    }
+  }
+}
