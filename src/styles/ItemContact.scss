@@ -1,0 +1,40 @@
+@import "./partials/box-flex";
+@import "./partials/variables";
+.item-contact {
+  @include box-flex($alingHorizontal: flex-start, $alingVertical: center);
+  list-style: none;
+  // margin: 0 0 0.5em 0;
+  padding: 0.5em;
+
+  &__avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+  &__section-info {
+    width: 100%;
+    overflow: hidden;
+    padding: 0 0 0 0.7em;
+    .container-name-hour {
+      @include box-flex($alingHorizontal: space-between);
+      &__name {
+        font-weight: 900;
+      }
+      &__hour {
+        color: #000;
+      }
+    }
+    .item-contact__section-info-last-message {
+      width: 80%;
+      margin: 0.3rem 0 0 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 0.5em 0 0;
+      color: $color-text-last-msg;
+    }
+  }
+}
+.item-contact:hover {
+  cursor: pointer;
+}

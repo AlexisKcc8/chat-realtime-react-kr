@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Alexis",
+    "lastMessage": "lorem jsadjk",
+    "avatar": "/images/my-avatar.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Dena",
+    "lastMessage": "lorem jsadjk",
+    "avatar": "/images/my-avatar.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Alejandra",
+    "lastMessage": "lorem jsadjk",
+    "avatar": "/images/my-avatar.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Pedro",
+    "lastMessage": "lorem jsadjk",
+    "avatar": "/images/my-avatar.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Ana",
+    "lastMessage": "lorem jsadjk",
+    "avatar": "/images/my-avatar.jpg"
+  }
+]

@@ -1,7 +1,9 @@
 import "../styles/SidebarContacts.scss";
-import { ButtonToolbar } from "./ButtonToolbar";
 import { Toolbar } from "./Toolbar";
+import { contacts } from "../database/contacts-fake";
+import { ItemContact } from "./ItemContact";
 export const SidebarContacts = () => {
+  // console.log(contacts);
   return (
     <aside className="side-contacts">
       <header className="header">
@@ -22,114 +24,11 @@ export const SidebarContacts = () => {
         {/* <section className=""></section> */}
       </header>
       <section className="container-chats">
-        <article>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
-            ducimus veritatis consequuntur! Officia laboriosam facilis quo
-            deleniti quod, ullam quidem sequi quibusdam reprehenderit minus vero
-            quia at maiores consequatur molestias?
-          </p>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-        </article>
+        <ul className="container-chats__list">
+          {contacts.map((contact) => (
+            <ItemContact key={contact.id} contact={contact} />
+          ))}
+        </ul>
       </section>
       <Toolbar />
     </aside>

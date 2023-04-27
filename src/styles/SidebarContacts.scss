@@ -30,23 +30,26 @@
   }
 
   .container-chats {
-    background-color: rgb(255, 255, 255);
+    width: 100%;
     flex-grow: 1;
-    article {
+    &__list {
+      margin: 0;
+      padding: 0;
+      width: 100%;
       min-height: 28rem;
-      max-height: 30rem;
+      max-height: 31rem;
       overflow: auto;
     }
   }
 
   .container-toolbar {
     width: 100%;
-    @include box-flex($alingHorizontal: space-around);
 
+    @include box-flex($alingHorizontal: space-around);
     .button-toolbar {
       background-color: transparent;
       border: none;
-      padding: 0.8em;
+      padding: 1em;
     }
     .button-toolbar :hover {
       cursor: pointer;
