@@ -9,6 +9,7 @@ function App() {
 
   return (
     <main className="App">
+      {/* <SingIn /> */}
       <>{user ? <HomeChat /> : <SingIn />}</>
     </main>
   );

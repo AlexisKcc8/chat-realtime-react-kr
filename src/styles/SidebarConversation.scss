@@ -1,28 +1,28 @@
 @import "./partials/variables";
 @import "./partials/box-flex";
-
-.side-contacts {
+@import "./partials/media-queries";
+.side-conversation {
   min-height: 100vh;
   overflow: hidden;
   @include box-flex($direction: column, $gap: 0);
-
-  .container-chats {
+  .container-conversation {
     width: 100%;
     flex-grow: 1;
+    background-image: url("/images/fondo-star-words.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @include querie-compu {
+      background-size: contain;
+      background-repeat: repeat;
+    }
     &__list {
       margin: 0;
       padding: 0;
       width: 100%;
       min-height: 30rem;
       max-height: 33rem;
-
       overflow: auto;
     }
-  }
-
-  .container-toolbar {
-    width: 100%;
-    padding: 1em 0;
-    @include box-flex($alingHorizontal: space-around);
   }
 }

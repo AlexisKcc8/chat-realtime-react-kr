@@ -1,0 +1,42 @@
+@import "./partials/variables";
+@import "./partials/box-flex";
+
+.header {
+  background-color: $color-text-thirty;
+  color: $color-text-secondary;
+  width: 100%;
+  height: 4rem;
+
+  @include box-flex($alingHorizontal: space-between);
+
+  .header-title-and-icons {
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    @include box-flex($alingHorizontal: space-between);
+    .header-title-and-avatar {
+      @include box-flex($gap: 0);
+      &__img-avatar {
+        width: 3em;
+        height: 3em;
+        box-sizing: initial;
+        border-radius: 50%;
+        margin: 0 0.5em 0 0;
+      }
+    }
+    .title-header {
+      font-size: 1.5em;
+    }
+
+    &__buttons-icons {
+      @include box-flex;
+      .header-title-and-icons__button-icon {
+        border: none;
+        background-color: transparent;
+      }
+      .header-title-and-icons__button-icon:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,25 +1,29 @@
-import { ButtonToolbar } from "./ButtonToolbar";
+import URL_ICON_CHAT from "/icons/icon-chats.svg";
+import URL_ICON_GROUP from "/icons/icon-group.svg";
+import URL_ICON_STATUS from "/icons/icon-status.svg";
+import URL_ICON_PHONE from "/icons/icon-phone.svg";
+import { ButtonIcon } from "./ButtonIcon";
 
 export const Toolbar = () => {
   return (
     <footer className="container-toolbar">
-      <ButtonToolbar
-        srcImg="/icons/icon-chats.svg"
+      <ButtonIcon
+        srcImg={URL_ICON_CHAT}
         altImg="icon-chat"
         nameButton="Chats"
       />
-      <ButtonToolbar
-        srcImg="/icons/icon-group.svg"
+      <ButtonIcon
+        srcImg={URL_ICON_GROUP}
         altImg="icon-communities"
         nameButton="Communites"
       />
-      <ButtonToolbar
-        srcImg="/icons/icon-status.svg"
+      <ButtonIcon
+        srcImg={URL_ICON_STATUS}
         altImg="icon-status"
         nameButton="Status"
       />
-      <ButtonToolbar
-        srcImg="/icons/icon-phone.svg"
+      <ButtonIcon
+        srcImg={URL_ICON_PHONE}
         altImg="icon-phone"
         nameButton="Calls"
       />
