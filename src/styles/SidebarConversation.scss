@@ -17,12 +17,36 @@
       background-repeat: repeat;
     }
     &__list {
-      margin: 0;
-      padding: 0;
       width: 100%;
-      min-height: 30rem;
-      max-height: 33rem;
-      overflow: auto;
+      min-height: 29rem;
+      max-height: 32rem;
+      @include box-flex($direction: column, $alingHorizontal: flex-start);
+      margin: 0;
+      padding: 1em 1em 0 1em;
+      overflow: scroll;
+      @include querie-compu {
+        min-height: 33rem;
+        max-height: 34rem;
+      }
+
+      .container-conversation__list-item {
+        list-style: none;
+        display: flex;
+        .container-conversation__list-item-msg {
+          display: flex;
+          background-color: #fff;
+          padding: 0 1em;
+          font-weight: bold;
+          overflow-wrap: break-word;
+          border-radius: 0 20px 20px 20px;
+        }
+      }
+      .received {
+        align-self: flex-start;
+      }
+      .sent {
+        align-self: flex-end;
+      }
     }
   }
 }
