@@ -1,0 +1,24 @@
+.form-wrapper-input {
+  position: relative;
+  width: $width-elements;
+  &__img {
+    color: var(--color-text-thirty);
+    position: absolute;
+    width: 1em;
+    height: 2em;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &__input {
+    box-sizing: border-box;
+    color: #191919;
+    padding: 1em 1.8em;
+    width: 100%;
+    font-size: 0.7em;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid var(--bg-color-secondary);
+    color: var(--color-text-thirty);
+  }
+}

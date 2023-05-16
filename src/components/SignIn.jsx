@@ -1,17 +1,94 @@
 import { useRef, useState } from "react";
-import { auth, provider } from "../firebase/firebase-config";
+import {
+  auth,
+  provider,
+  storage,
+  dbFirestore,
+} from "../firebase/firebase-config";
 import { signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore";
 
 import "../styles/SingIn.scss";
+
 const TYPES_INPUTS_FORM = {
   PASSWORD: "password",
   TEXT: "text",
   FILE: "file",
 };
+const INITIAL_STATE_USER = {
+  username: "",
+  email: "",
+  password: "",
+  photo: null,
+};
+
 export const SingIn = () => {
   const [viewLogin, setViewLogin] = useState(true);
   const [showTextPassword, setShowTextPassword] = useState(false);
+  const [perfilUser, setPerfilUser] = useState(INITIAL_STATE_USER);
+  const [loading, setLoading] = useState(false);
+  const [errorLogin, setErrorLogin] = useState(false);
+
   const inputPws = useRef();
+
+  const inputChange = (e) => {
+    let data = null;
+    let prop = e.target.name;
+    data = e.target.value;
+    if (e.target.type == "file") {
+      data = e.target.files[0];
+    }
+    setPerfilUser({
+      ...perfilUser,
+      [prop]: data,
+    });
+  };
+
+  const formSubmit = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    const { username, email, password, photo } = perfilUser;
+
+    try {
+      //create user
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("result123", res.user.uid);
+      //Create a unique image name
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${username + date}`);
+
+      await uploadBytesResumable(storageRef, photo).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            //update profile
+            await updateProfile(res.user, {
+              username,
+              photoURL: downloadURL,
+            });
+            //create user on firestore
+            await setDoc(doc(dbFirestore, "users", res.user.uid), {
+              uid: res.user.uid,
+              username,
+              email,
+              photoURL: downloadURL,
+            });
+            //create empty user chats on firestore
+            await setDoc(doc(dbFirestore, "userChats", res.user.uid), {});
+          } catch (err) {
+            console.log(err);
+            setErrorLogin(true);
+            setLoading(false);
+          }
+        });
+      });
+    } catch (error) {
+      setErr(true);
+      setLoading(false);
+    }
+  };
+
   const changeViewRegister = () => {
     setViewLogin(!viewLogin);
   };
@@ -30,6 +107,7 @@ export const SingIn = () => {
       setShowTextPassword(false);
     }
   };
+
   return (
     <section className="container-singin">
       <section className="container-hero">
@@ -44,7 +122,7 @@ export const SingIn = () => {
         </article>
       </section>
 
-      <form className="container-form">
+      <form className="container-form" onSubmit={formSubmit}>
         <h3 className="container-form__message-info">
           {viewLogin ? "Login" : "Create a New Account"}
         </h3>
@@ -59,6 +137,9 @@ export const SingIn = () => {
               className="container-form__input"
               type="text"
               required
+              name="username"
+              onChange={inputChange}
+              value={perfilUser.username}
               placeholder="UserName"
             />
           </div>
@@ -74,8 +155,9 @@ export const SingIn = () => {
             type="email"
             required
             placeholder="Email"
-            name=""
-            id=""
+            name="email"
+            onChange={inputChange}
+            value={perfilUser.email}
           />
         </div>
         <div className="container-form__wrapper-input">
@@ -101,8 +183,9 @@ export const SingIn = () => {
             type="password"
             required
             placeholder="Password"
-            name=""
-            id=""
+            name="password"
+            onChange={inputChange}
+            value={perfilUser.password}
           />
         </div>
 
@@ -110,7 +193,8 @@ export const SingIn = () => {
           className="container-form__input"
           style={{ display: "none" }}
           type="file"
-          name=""
+          name="photo"
+          onChange={inputChange}
           id="input-file-avatar"
         />
         {viewLogin ? null : (
@@ -126,7 +210,10 @@ export const SingIn = () => {
             <p className="container-form__msg-add-avatar">Add an avatar</p>
           </label>
         )}
-        <button className="container-form__form-button">Sing Up</button>
+        <button disabled={loading} className="container-form__form-button">
+          Sing Up
+        </button>
+        {errorLogin ? <span>Something an error</span> : null}
       </form>
 
       <section className="container-social-media">
