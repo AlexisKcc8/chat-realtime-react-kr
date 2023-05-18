@@ -15,25 +15,25 @@ import { SedMessage } from "./SedMessage";
 import "../styles/SidebarConversation.scss";
 export const SidebarConversations = () => {
   const [messages, setMessages] = useState([]);
-  const { userID } = auth.currentUser;
-  useEffect(() => {
-    const q = query(
-      collection(dbFirestore, "messages"),
-      orderBy("createdAt"),
-      limit(50)
-    );
+  // const { userID } = auth.currentUser;
+  // useEffect(() => {
+  //   const q = query(
+  //     collection(dbFirestore, "messages"),
+  //     orderBy("createdAt"),
+  //     limit(50)
+  //   );
 
-    const data = onSnapshot(q, (QuerySnapshot) => {
-      let messages = [];
-      QuerySnapshot.forEach((doc) => {
-        messages.push({ ...doc.data(), id: doc.id });
-      });
-      console.log(messages);
-      setMessages(messages);
-    });
+  //   const data = onSnapshot(q, (QuerySnapshot) => {
+  //     let messages = [];
+  //     QuerySnapshot.forEach((doc) => {
+  //       messages.push({ ...doc.data(), id: doc.id });
+  //     });
+  //     console.log(messages);
+  //     setMessages(messages);
+  //   });
 
-    return () => data;
-  }, []);
+  //   return () => data;
+  // }, []);
   return (
     <section className="side-conversation">
       <HeaderConversation />

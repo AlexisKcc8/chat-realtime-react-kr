@@ -1,0 +1,30 @@
+@import "./partials/box-flex";
+@import "./partials/media-queries";
+@import "./partials/variables";
+.container-hero {
+  background-color: var(--bg-color-secondary);
+  @include box-flex($direction: column);
+  @include querie-compu {
+    @include box-flex($direction: row);
+  }
+  padding: 0.7em 0;
+  color: var(--color-text-secondary);
+  &__img-avatar {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border: 5px solid var(--color-text-secondary);
+  }
+  &__container-title-autor {
+    @include box-flex($direction: column, $gap: 0);
+    .container-hero__title {
+      font-weight: bold;
+      font-size: 1.7em;
+      margin: 0;
+    }
+    .container-hero__name-autor {
+      font-size: 0.7em;
+      color: var(--color-text-secondary);
+    }
+  }
+}

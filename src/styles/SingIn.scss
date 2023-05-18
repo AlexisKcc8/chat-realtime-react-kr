@@ -1,89 +1,24 @@
-@mixin box-flex(
-  $direction: row,
-  $alingHorizontal: center,
-  $alingVertical: center,
-  $gap: 0.5em
-) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $alingHorizontal;
-  align-items: $alingVertical;
-  gap: $gap;
-}
-
-.container-singin {
-  $width-elements: 85%;
+@import "./partials/box-flex";
+@import "./partials/media-queries";
+.container-login-register {
   font-size: 1.5rem;
-  .container-hero {
-    background-color: var(--bg-color-secondary);
-    @include box-flex($direction: column);
-    padding: 0.7em 0;
-    color: var(--color-text-secondary);
-    &__img-avatar {
-      width: 5rem;
-      height: 5rem;
-      border-radius: 50%;
-      border: 5px solid var(--color-text-secondary);
-    }
-    &__container-title-autor {
-      @include box-flex($direction: column, $gap: 0);
-      .container-hero__title {
-        font-weight: bold;
-        font-size: 1.7em;
-        margin: 0;
-      }
-      .container-hero__name-autor {
-        font-size: 0.7em;
-        color: var(--color-text-secondary);
-      }
-    }
+  @include querie-compu {
+    font-size: 1.7rem;
   }
-
   .container-form {
     @include box-flex($direction: column);
-    padding: 1em 0 0 0;
+    padding: 1em 1em 0 1em;
+    gap: 0.5em;
     color: var(--color-text-thirty);
-    &__wrapper-input {
-      position: relative;
-      width: $width-elements;
-      .container-form__img-input {
-        color: var(--color-text-thirty);
-        position: absolute;
-        width: 1em;
-        height: 2em;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-      .container-form__input {
-        box-sizing: border-box;
-        color: #191919;
-        padding: 1em 1.8em;
-        width: 100%;
-        font-size: 0.7em;
-        border: none;
-        outline: none;
-        border-bottom: 1px solid var(--bg-color-secondary);
-        color: var(--color-text-thirty);
-      }
-      .container-form__input--password {
-        padding: 1em 0;
-      }
-      .container-form__img-input--password {
-        left: unset;
-        right: 12px;
-      }
-      .container-form__img-input--password:hover {
-        cursor: pointer;
-      }
+    @include querie-compu {
+      padding: 1em 18em 0 18em;
     }
-
     &__label-avatar {
       @include box-flex($alingHorizontal: flex-start);
-      width: $width-elements;
+      width: 100%;
       .container-form__img-add-avatar {
-        width: 2rem;
-        height: 2rem;
+        width: 3rem;
+        height: 3rem;
       }
       .container-form__msg-add-avatar {
         font-size: 0.7em;
@@ -94,7 +29,7 @@
     }
     &__form-button {
       background-color: var(--bg-color-secondary);
-      width: $width-elements;
+      width: 100%;
       padding: 0.8em;
       margin: 1em 0 0 0;
       font-size: 0.7em;
@@ -111,7 +46,10 @@
     @include box-flex($direction: column);
     &__container-message {
       @include box-flex;
-      width: $width-elements;
+      width: 88%;
+      @include querie-compu {
+        width: 35%;
+      }
       position: relative; /* Para que los pseudo-elementos se posicionen dentro del contenedor */
       padding: 0 20px;
       margin: 1em 0 0 0;
@@ -122,6 +60,9 @@
         top: 50%; /* Para que los pseudo-elementos se posicionen en el centro vertical del contenedor */
         border-top: 1px solid #4949498a; /* Agrega una línea sólida de 1 píxel de ancho */
         width: 4em; /* Ajusta el ancho de las líneas a tu gusto */
+        @include querie-compu {
+          width: 7em;
+        }
       }
       &::before {
         left: 1em;
@@ -172,39 +113,6 @@
       }
       .container-social-media__change-view-login:hover {
         cursor: pointer;
-      }
-    }
-  }
-}
-
-@media screen and (min-width: 1200px) and (orientation: landscape) {
-  .container-singin {
-    $width-elements: 65%;
-    font-size: 1.8rem;
-    .container-hero {
-      @include box-flex($direction: row);
-      &__container-title-autor {
-        @include box-flex(
-          $direction: column,
-          $gap: 0,
-          $alingVertical: flex-start
-        );
-      }
-    }
-    .container-form {
-      &__wrapper-input,
-      &__label-avatar,
-      &__form-button {
-        width: 40%;
-      }
-    }
-    .container-social-media {
-      &__container-message {
-        width: 40%;
-        &::before,
-        &::after {
-          width: 7em;
-        }
       }
     }
   }

@@ -2,7 +2,7 @@ import { auth, dbFirestore } from "../firebase/firebase-config";
 import "../styles/HeaderApp.scss";
 import { ButtonIcon } from "./ButtonIcon";
 export const HeaderContacs = () => {
-  const { userID } = auth.currentUser;
+  // const { userID } = auth.currentUser;
   return (
     <header className="header">
       <section className="header-title-and-icons">
@@ -22,7 +22,7 @@ export const HeaderContacs = () => {
           <ButtonIcon
             srcImg="/icons/icon-more.svg"
             altImg="icon-more"
-            event={() => auth.signOut()}
+            // event={() => auth.signOut()}
           />
         </article>
       </section>
