@@ -1,3 +1,4 @@
+import { InputIcon } from "../components/InputIcon";
 import { SidebarContacts } from "../components/SidebarContacts";
 import { SidebarConversations } from "../components/SidebarConversations";
 
@@ -8,6 +9,7 @@ export const HomeChat = () => {
       <div className="home-chat-side-contact">
         <SidebarContacts />
       </div>
+
       <div className="home-chat-side-conversation">
         <SidebarConversations />
       </div>

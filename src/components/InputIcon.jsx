@@ -8,8 +8,10 @@ export const InputIcon = (props) => {
     placeholder,
     name,
     onChange,
+    onKeyDown,
     value,
     id,
+    className,
   } = props;
   return (
     <div className="form-wrapper-input">
@@ -17,7 +19,7 @@ export const InputIcon = (props) => {
         <img className="form-wrapper-input__img" src={srcImg} alt={altImg} />
       )}
       <input
-        className="form-wrapper-input__input"
+        className={`form-wrapper-input__input ${className}`}
         type={type}
         required={isRequired}
         placeholder={placeholder}
@@ -25,6 +27,7 @@ export const InputIcon = (props) => {
         onChange={onChange}
         value={value}
         id={id}
+        onKeyDown={onKeyDown}
       />
     </div>
   );

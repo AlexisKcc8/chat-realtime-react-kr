@@ -21,4 +21,12 @@
     border-bottom: 1px solid var(--bg-color-secondary);
     color: var(--color-text-thirty);
   }
+
+  .search-user {
+    font-size: 0.8rem;
+    background-color: rgb(228, 228, 228);
+    border: none;
+    padding: 1em 2em;
+    border-radius: 10px;
+  }
 }

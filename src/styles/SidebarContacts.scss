@@ -5,7 +5,15 @@
   min-height: 100vh;
   overflow: hidden;
   @include box-flex($direction: column, $gap: 0);
+  .container-input-search-filter {
+    width: 100%;
+    @include box-flex;
+    padding: 0.5rem 1rem;
 
+    .container-input-search {
+      width: 80%;
+    }
+  }
   .container-chats {
     width: 100%;
     flex-grow: 1;

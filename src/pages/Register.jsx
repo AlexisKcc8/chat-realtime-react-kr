@@ -1,6 +1,6 @@
 //hooks
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //firebase
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -52,13 +52,13 @@ export const Register = () => {
           try {
             //update profile
             await updateProfile(res.user, {
-              username,
+              displayName: username,
               photoURL: downloadURL,
             });
             //create user on firestore
             await setDoc(doc(dbFirestore, "users", res.user.uid), {
               uid: res.user.uid,
-              username,
+              displayName: username,
               email,
               photoURL: downloadURL,
             });
@@ -150,6 +150,15 @@ export const Register = () => {
         {errorLogin ? <span>Something an error</span> : null}
       </form>
       <FooterLoginRegister />
+
+      <article className="container-social-media__container-message-account">
+        <p className="container-social-media__message-account">
+          You do have an account?
+        </p>
+        <Link to="/login" className="container-social-media__change-view-login">
+          Login
+        </Link>
+      </article>
     </section>
   );
 };

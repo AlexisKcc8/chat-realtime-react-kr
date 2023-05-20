@@ -6,6 +6,9 @@ import { HeaderLoginRegister } from "../components/HeaderLoginRegister";
 import { FooterLoginRegister } from "../components/FooterLoginRegister";
 
 import "../styles/SingIn.scss";
+import { Link, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebase-config";
 
 const TYPES_INPUTS_FORM = {
   PASSWORD: "password",
@@ -18,12 +21,11 @@ const INITIAL_STATE_USER = {
 };
 
 export const SingIn = () => {
-  const [showTextPassword, setShowTextPassword] = useState(false);
   const [perfilUser, setPerfilUser] = useState(INITIAL_STATE_USER);
   const [loading, setLoading] = useState(false);
   const [errorLogin, setErrorLogin] = useState(false);
 
-  const inputPws = useRef();
+  const navigate = useNavigate();
 
   const inputChange = (e) => {
     let prop = e.target.name;
@@ -35,22 +37,24 @@ export const SingIn = () => {
     });
   };
 
-  const showTextInputPassword = () => {
-    let typeInput = inputPws.current.type;
-    if (typeInput === TYPES_INPUTS_FORM.PASSWORD) {
-      inputPws.current.type = TYPES_INPUTS_FORM.TEXT;
-      setShowTextPassword(true);
-    } else {
-      inputPws.current.type = TYPES_INPUTS_FORM.PASSWORD;
-      setShowTextPassword(false);
+  const submitInfoUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { email, password } = perfilUser;
+
+      await signInWithEmailAndPassword(auth, email, password);
+
+      navigate("/");
+    } catch (error) {
+      setErrorLogin(true);
     }
   };
-
   return (
     <section className="container-login-register">
       <HeaderLoginRegister />
 
-      <form className="container-form">
+      <form className="container-form" onSubmit={submitInfoUser}>
         <h3 className="container-form__message-info">Login</h3>
         <InputIcon
           srcImg="/icons/icon-email.svg"
@@ -79,6 +83,18 @@ export const SingIn = () => {
       </form>
 
       <FooterLoginRegister />
+
+      <article className="container-social-media__container-message-account">
+        <p className="container-social-media__message-account">
+          You don't have an account?
+        </p>
+        <Link
+          to="/register"
+          className="container-social-media__change-view-login"
+        >
+          Register Here
+        </Link>
+      </article>
     </section>
   );
 };

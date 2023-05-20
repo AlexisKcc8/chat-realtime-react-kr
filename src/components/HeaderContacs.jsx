@@ -1,19 +1,26 @@
-import { auth, dbFirestore } from "../firebase/firebase-config";
-import "../styles/HeaderApp.scss";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebase-config";
 import { ButtonIcon } from "./ButtonIcon";
+import { useContext } from "react";
+
+import { AuthContext } from "../context/AuthContext";
+
+import "../styles/HeaderApp.scss";
 export const HeaderContacs = () => {
   // const { userID } = auth.currentUser;
+  const { currentUser } = useContext(AuthContext);
+  const { photoURL, displayName } = currentUser;
+
   return (
     <header className="header">
       <section className="header-title-and-icons">
         <article className="header-title-and-avatar">
           <img
             className="header-title-and-avatar__img-avatar"
-            style={{ border: "1px solid red", height: "100%" }}
-            src="/images/my-avatar.jpg"
+            src={photoURL}
             alt=""
           />
-          <h3 className="">CodeChat</h3>
+          <h3 className="">{displayName}</h3>
         </article>
 
         <article className="header-title-and-icons__buttons-icons">
@@ -22,7 +29,7 @@ export const HeaderContacs = () => {
           <ButtonIcon
             srcImg="/icons/icon-more.svg"
             altImg="icon-more"
-            // event={() => auth.signOut()}
+            event={() => signOut(auth)}
           />
         </article>
       </section>

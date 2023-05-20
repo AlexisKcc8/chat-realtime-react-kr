@@ -6,19 +6,6 @@ import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 export const FooterLoginRegister = () => {
-  const [viewLogin, setViewLogin] = useState(true);
-  const navigate = useNavigate();
-
-  const changeView = () => {
-    const url = new URL(window.location.href);
-    if (url.pathname === "/login") {
-      navigate("/register");
-    }
-    if (url.pathname === "/register") {
-      navigate("/login");
-    }
-  };
-
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider);
     // console.log(auth);
@@ -47,17 +34,6 @@ export const FooterLoginRegister = () => {
             src="/icons/google-svg.svg"
             alt="logo-google"
           />
-        </button>
-      </article>
-      <article className="container-social-media__container-message-account">
-        <p className="container-social-media__message-account">
-          {viewLogin ? "You don't" : "Already"} have an account?
-        </p>
-        <button
-          onClick={changeView}
-          className="container-social-media__change-view-login"
-        >
-          {viewLogin ? "Register" : "Login"} Here
         </button>
       </article>
     </section>
