@@ -1,8 +1,12 @@
+import { useEffect } from "react";
 import "../styles/ItemContact.scss";
 export const ItemContact = (props) => {
   const { contact, eventClick } = props;
-  const { displayName, photoURL } = contact;
-  const showConversation = () => {};
+  const { uid, displayName, photoURL } = contact;
+  // useEffect(() => {
+  //   console.log(displayName);
+  // }, []);
+
   return (
     <li className="item-contact" onClick={eventClick}>
       <img

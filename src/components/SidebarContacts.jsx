@@ -5,7 +5,7 @@ import { contacts } from "../database/contacts-fake";
 import { ItemContact } from "./ItemContact";
 import { HeaderContacs } from "./HeaderContacs";
 import { InputIcon } from "./InputIcon";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { dbFirestore } from "../firebase/firebase-config";
 import {
   collection,
@@ -17,37 +17,58 @@ import {
   serverTimestamp,
   updateDoc,
   doc,
+  onSnapshot,
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 export const SidebarContacts = () => {
   const [user, setUser] = useState(null);
   const [userName, setUserName] = useState("");
   const [err, setErr] = useState(false);
-
+  const [chats, setChats] = useState([]);
   const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const getChats = () => {
+      const unsub = onSnapshot(
+        doc(dbFirestore, "userChats", currentUser.uid),
+        (doc) => {
+          if (!doc.data()) {
+            return setChats(null);
+          }
+          setChats(doc.data());
+        }
+      );
+
+      return () => {
+        unsub();
+      };
+    };
+
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    const q = query(
-      collection(dbFirestore, "users"),
-      where("displayName", "==", userName)
-    );
-
     try {
+      const q = query(
+        collection(dbFirestore, "users"),
+        where("displayName", "==", userName)
+      );
+      // console.log(q);
       const querySnapShot = await getDocs(q);
       querySnapShot.forEach((doc) => {
+        // console.log(doc.data());
         setUser(doc.data());
       });
-    } catch (error) {
-      console.log(error);
-      setErr(error);
+    } catch (myErr) {
+      console.log(myErr);
+      setErr(myErr);
     }
   };
-  const example = () => {
-    console.log(user);
-  };
+
   const handleSelect = async () => {
+    console.log("click");
     //check whether the group(chats in firestore) exists, if not create
     const combinedId =
       currentUser.uid > user.uid
@@ -78,8 +99,6 @@ export const SidebarContacts = () => {
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
-
-        console.log(combinedId);
       }
     } catch (err) {
       console.log(err);
@@ -91,7 +110,9 @@ export const SidebarContacts = () => {
 
   return (
     <aside className="side-contacts">
-      <HeaderContacs />
+      <div className="container-header">
+        <HeaderContacs />
+      </div>
       <div className="container-input-search-filter">
         <form onSubmit={handleSearch} className="container-input-search">
           <InputIcon
@@ -104,28 +125,31 @@ export const SidebarContacts = () => {
             onChange={(e) => setUserName(e.target.value)}
           />
         </form>
-        <img onClick={example} src="/icons/icon-glass.svg" alt="" />
+        <img src="/icons/icon-glass.svg" alt="" />
       </div>
-      {err || !user ? <h3>Usuario no encontrado</h3> : null}
+      {err && <span>User not found!</span>}
       <section className="container-chats">
-        <div>
+        <div style={{ backgroundColor: "#d1ffedcc" }}>
           {user ? (
-            <ItemContact contact={user} eventClick={handleSelect} />
-          ) : (
-            <h3 style={{ margin: "1rem 2rem" }}>
-              Sin Contactos por el momento
-            </h3>
-          )}
+            <div>
+              <h5 style={{ textAlign: "center" }}>Usario Encontrado</h5>
+              <ItemContact contact={user} eventClick={handleSelect} />
+            </div>
+          ) : null}
         </div>
         <ul className="container-chats__list">
-          {/* <p>{user}</p> */}
-
-          {contacts.map((contact) => (
-            <ItemContact key={contact.id} contact={contact} />
-          ))}
+          {chats
+            ? Object.entries(chats)
+                ?.sort((a, b) => b[1].date - a[1].date)
+                .map((chat) => (
+                  <ItemContact key={chat[0]} contact={chat[1].userInfo} />
+                ))
+            : null}
         </ul>
       </section>
-      <Toolbar />
+      <div className="container-footer">
+        <Toolbar />
+      </div>
     </aside>
   );
 };
