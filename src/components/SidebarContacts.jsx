@@ -20,12 +20,15 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
 export const SidebarContacts = () => {
   const [user, setUser] = useState(null);
   const [userName, setUserName] = useState("");
   const [err, setErr] = useState(false);
   const [chats, setChats] = useState([]);
+
   const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
 
   useEffect(() => {
     const getChats = () => {
@@ -67,8 +70,7 @@ export const SidebarContacts = () => {
     }
   };
 
-  const handleSelect = async () => {
-    console.log("click");
+  const handleSelectChat = async () => {
     //check whether the group(chats in firestore) exists, if not create
     const combinedId =
       currentUser.uid > user.uid
@@ -108,6 +110,10 @@ export const SidebarContacts = () => {
     setUserName("");
   };
 
+  const handleSelectConversation = (chat) => {
+    dispatch({ type: "CHANGE_USER", payload: chat });
+  };
+
   return (
     <aside className="side-contacts">
       <div className="container-header">
@@ -133,16 +139,23 @@ export const SidebarContacts = () => {
           {user ? (
             <div>
               <h5 style={{ textAlign: "center" }}>Usario Encontrado</h5>
-              <ItemContact contact={user} eventClick={handleSelect} />
+              <ItemContact contact={user} eventClick={handleSelectChat} />
             </div>
           ) : null}
         </div>
         <ul className="container-chats__list">
-          {chats
+          {chats != undefined
             ? Object.entries(chats)
                 ?.sort((a, b) => b[1].date - a[1].date)
                 .map((chat) => (
-                  <ItemContact key={chat[0]} contact={chat[1].userInfo} />
+                  <ItemContact
+                    key={chat[0]}
+                    contact={chat[1].userInfo}
+                    lastMessage={chat[1].lastMessage?.msg}
+                    eventClick={() =>
+                      handleSelectConversation(chat[1].userInfo)
+                    }
+                  />
                 ))
             : null}
         </ul>

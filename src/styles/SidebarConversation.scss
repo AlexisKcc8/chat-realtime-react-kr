@@ -29,23 +29,29 @@
         max-height: 34rem;
       }
 
-      .container-conversation__list-item {
+      .item-message {
         list-style: none;
-        display: flex;
-        .container-conversation__list-item-msg {
-          display: flex;
-          background-color: #fff;
-          padding: 0 1em;
-          font-weight: bold;
-          overflow-wrap: break-word;
-          border-radius: 0 20px 20px 20px;
+        @include box-flex($direction: column);
+        padding: 0 1rem;
+        &__content {
+          @include box-flex;
+        }
+        &__content-img {
+          width: 3rem;
+          height: 3rem;
+          border-radius: 50%;
         }
       }
       .received {
         align-self: flex-start;
+        background-color: #ffffff;
+        border-radius: 0 20px 20px 20px;
       }
       .sent {
         align-self: flex-end;
+        background-color: #acfcc7;
+        border-radius: 20px 0 20px 20px;
+        margin: 0 2rem 0 0;
       }
     }
   }

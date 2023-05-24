@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import "../styles/ItemContact.scss";
 export const ItemContact = (props) => {
-  const { contact, eventClick } = props;
+  const { contact, lastMessage = "", eventClick } = props;
   const { uid, displayName, photoURL } = contact;
   // useEffect(() => {
-  //   console.log(displayName);
+  //   console.log(contact);
   // }, []);
 
   return (
@@ -19,7 +19,11 @@ export const ItemContact = (props) => {
           <h4 className="container-name-hour__name">{displayName}</h4>
           <span className="container-name-hour__hour">12:00pm</span>
         </article>
-        {/* <p className="item-contact__section-info-last-message">{lastMessage}</p> */}
+        {lastMessage ? (
+          <p className="item-contact__section-info-last-message">
+            {lastMessage}
+          </p>
+        ) : null}
       </section>
     </li>
   );

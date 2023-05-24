@@ -1,20 +1,88 @@
-import { useState } from "react";
-import { auth, dbFirestore } from "../firebase/firebase-config";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { useContext, useState } from "react";
+import { auth, dbFirestore, storage } from "../firebase/firebase-config";
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  updateDoc,
+  doc,
+  Timestamp,
+  arrayUnion,
+} from "firebase/firestore";
+import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 export const SedMessage = () => {
   const [msg, setMsg] = useState("");
-  const messagesRef = collection(dbFirestore, "messages");
+  const [img, setImg] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
 
-  const sendMsg = async (e) => {
-    const { uid, photoURL } = auth.currentUser;
+  // const messagesRef = collection(dbFirestore, "messages");
 
-    await addDoc(messagesRef, {
-      text: msg,
-      createdAt: serverTimestamp(),
-      uid: uid,
-      photoURL: photoURL,
+  // const sendMsg = async (e) => {
+  //   const { uid, photoURL } = auth.currentUser;
+
+  //   await addDoc(messagesRef, {
+  //     text: msg,
+  //     createdAt: serverTimestamp(),
+  //     uid: uid,
+  //     photoURL: photoURL,
+  //   });
+  //   setMsg("");
+  // };
+
+  const handleSend = async () => {
+    if (img) {
+      const storageRef = ref(storage, window.crypto.randomUUID());
+
+      const uploadTask = uploadBytesResumable(storageRef, img);
+
+      uploadTask.on(
+        (error) => {
+          //TODO:Handle Error
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateDoc(doc(dbFirestore, "chats", data.chatId), {
+              messages: arrayUnion({
+                id: window.crypto.randomUUID(),
+                msg,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+            });
+          });
+        }
+      );
+    } else {
+      await updateDoc(doc(dbFirestore, "chats", data.chatId), {
+        messages: arrayUnion({
+          id: window.crypto.randomUUID(),
+          msg,
+          senderId: currentUser.uid,
+          date: Timestamp.now(),
+        }),
+      });
+    }
+
+    await updateDoc(doc(dbFirestore, "userChats", currentUser.uid), {
+      [data.chatId + ".lastMessage"]: {
+        msg,
+      },
+      [data.chatId + ".date"]: serverTimestamp(),
     });
+
+    await updateDoc(doc(dbFirestore, "userChats", data.user.uid), {
+      [data.chatId + ".lastMessage"]: {
+        msg,
+      },
+      [data.chatId + ".date"]: serverTimestamp(),
+    });
+
     setMsg("");
+    setImg(null);
   };
 
   const styleContainerSedMessage = {
@@ -34,7 +102,16 @@ export const SedMessage = () => {
         onChange={(e) => setMsg(e.target.value)}
         style={styleContainerInputMessage}
       />
-      <button style={styleContainerButtonMessage} onClick={sendMsg}>
+      <input
+        type="file"
+        id="file-send"
+        style={{ display: "none" }}
+        onChange={(e) => setImg(e.target.files[0])}
+      />
+      <label htmlFor="file-send">
+        <img src="/icons/icon-glass.svg" alt="" />
+      </label>
+      <button style={styleContainerButtonMessage} onClick={handleSend}>
         Send
       </button>
     </div>

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import "../styles/SidebarConversation.scss";
+import { useContext, useEffect, useState } from "react";
 import { auth, dbFirestore } from "../firebase/firebase-config";
 
 import {
@@ -7,52 +8,36 @@ import {
   limit,
   orderBy,
   onSnapshot,
+  doc,
 } from "firebase/firestore";
 
 import { HeaderConversation } from "./HeaderConversation";
 import { SedMessage } from "./SedMessage";
 
-import "../styles/SidebarConversation.scss";
+import { ChatContext } from "../context/ChatContext";
+import { ItemMessage } from "./ItemMessage";
 export const SidebarConversations = () => {
   const [messages, setMessages] = useState([]);
-  // const { userID } = auth.currentUser;
-  // useEffect(() => {
-  //   const q = query(
-  //     collection(dbFirestore, "messages"),
-  //     orderBy("createdAt"),
-  //     limit(50)
-  //   );
+  const { data } = useContext(ChatContext);
+  useEffect(() => {
+    const unSub = onSnapshot(doc(dbFirestore, "chats", data.chatId), (doc) => {
+      doc.exists() && setMessages(doc.data().messages);
+    });
 
-  //   const data = onSnapshot(q, (QuerySnapshot) => {
-  //     let messages = [];
-  //     QuerySnapshot.forEach((doc) => {
-  //       messages.push({ ...doc.data(), id: doc.id });
-  //     });
-  //     console.log(messages);
-  //     setMessages(messages);
-  //   });
+    return () => {
+      unSub();
+    };
+  }, [data.chatId]);
 
-  //   return () => data;
-  // }, []);
+  // console.log(messages);
   return (
     <section className="side-conversation">
       <HeaderConversation />
       <section className="container-conversation">
         <ul className="container-conversation__list">
-          {messages &&
-            messages.map((message, id, uid, photoURL) => (
-              <li
-                key={id}
-                className={`container-conversation__list-item ${
-                  userID === auth.currentUser.uid ? "sent" : "received"
-                }`}
-              >
-                <div className={`msg container-conversation__list-item-msg `}>
-                  {/* <img src={message.photoURL} /> */}
-                  <p>{message.text}</p>
-                </div>
-              </li>
-            ))}
+          {messages.map((m) => (
+            <ItemMessage key={window.crypto.randomUUID()} message={m} />
+          ))}
         </ul>
       </section>
       <SedMessage />
