@@ -2,17 +2,19 @@
 @import "./partials/box-flex";
 @import "./partials/media-queries";
 .side-contacts {
-  min-height: 100vh;
   position: relative;
-  @include box-flex($direction: column, $gap: 0);
-
+  overflow: hidden;
+  height: 100vh;
   .container-header {
     width: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
   }
   .container-input-search-filter {
     width: 100%;
     @include box-flex;
-    padding: 0.5rem 1rem;
+    padding: 0.2rem 1rem;
 
     .container-input-search {
       width: 80%;
@@ -21,29 +23,38 @@
 
   .container-chats {
     width: 100%;
-    flex-grow: 1;
+    max-height: 72vh;
+    overflow: scroll;
+    padding: 0 0 1rem 0;
+    &__content-user-found {
+      background-color: #d1ffedcc;
+    }
+    &__user-found {
+      text-align: center;
+      padding: 0.5rem 0 0 0;
+    }
     &__list {
-      width: 100%;
-      max-height: 23rem;
-
-      @include querie-compu {
-        max-height: 32rem;
-      }
-      margin: 0;
       padding: 0;
-      overflow: scroll;
-      overflow: auto;
+    }
+    @include querie-compu {
+      max-height: 80vh;
     }
   }
   .container-footer {
     width: 100%;
+    background-color: #f0f2f5;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    @include box-flex;
     @include querie-compu {
       display: none;
     }
   }
   .container-toolbar {
     width: 100%;
-    padding: 1em 0;
+    padding: 0.2em 0;
+
     @include box-flex($alingHorizontal: space-around);
   }
 }

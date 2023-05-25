@@ -1,15 +1,8 @@
 import "../styles/SidebarConversation.scss";
 import { useContext, useEffect, useState } from "react";
-import { auth, dbFirestore } from "../firebase/firebase-config";
+import { dbFirestore } from "../firebase/firebase-config";
 
-import {
-  collection,
-  query,
-  limit,
-  orderBy,
-  onSnapshot,
-  doc,
-} from "firebase/firestore";
+import { onSnapshot, doc } from "firebase/firestore";
 
 import { HeaderConversation } from "./HeaderConversation";
 import { SedMessage } from "./SedMessage";
@@ -29,7 +22,6 @@ export const SidebarConversations = () => {
     };
   }, [data.chatId]);
 
-  // console.log(messages);
   return (
     <section className="side-conversation">
       <HeaderConversation />

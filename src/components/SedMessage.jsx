@@ -1,8 +1,7 @@
+import "../styles/SedMessage.scss";
 import { useContext, useState } from "react";
-import { auth, dbFirestore, storage } from "../firebase/firebase-config";
+import { dbFirestore, storage } from "../firebase/firebase-config";
 import {
-  collection,
-  addDoc,
   serverTimestamp,
   updateDoc,
   doc,
@@ -12,25 +11,13 @@ import {
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { Iconpaperclip } from "./icons/Iconpaperclip";
+
 export const SedMessage = () => {
   const [msg, setMsg] = useState("");
   const [img, setImg] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-
-  // const messagesRef = collection(dbFirestore, "messages");
-
-  // const sendMsg = async (e) => {
-  //   const { uid, photoURL } = auth.currentUser;
-
-  //   await addDoc(messagesRef, {
-  //     text: msg,
-  //     createdAt: serverTimestamp(),
-  //     uid: uid,
-  //     photoURL: photoURL,
-  //   });
-  //   setMsg("");
-  // };
 
   const handleSend = async () => {
     if (img) {
@@ -94,13 +81,16 @@ export const SedMessage = () => {
   const styleContainerInputMessage = { width: "85%" };
   const styleContainerButtonMessage = { width: "15%" };
   return (
-    <div style={styleContainerSedMessage}>
+    <div className="container-sedMessage">
+      <label htmlFor="file-send">
+        <Iconpaperclip />
+      </label>
       <input
+        className="container-sedMessage__input-msg"
         type="text"
         placeholder="Message…"
         value={msg}
         onChange={(e) => setMsg(e.target.value)}
-        style={styleContainerInputMessage}
       />
       <input
         type="file"
@@ -108,12 +98,8 @@ export const SedMessage = () => {
         style={{ display: "none" }}
         onChange={(e) => setImg(e.target.files[0])}
       />
-      <label htmlFor="file-send">
-        <img src="/icons/icon-glass.svg" alt="" />
-      </label>
-      <button style={styleContainerButtonMessage} onClick={handleSend}>
-        Send
-      </button>
+
+      <button onClick={handleSend}>Send</button>
     </div>
   );
 };

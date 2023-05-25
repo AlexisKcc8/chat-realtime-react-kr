@@ -7,6 +7,7 @@
   @include box-flex($direction: column, $gap: 0);
   .container-conversation {
     width: 100%;
+    // min-height: 100vh;
     flex-grow: 1;
     background-image: url("/images/fondo-star-words.jpg");
     background-position: center;
@@ -18,8 +19,7 @@
     }
     &__list {
       width: 100%;
-      min-height: 29rem;
-      max-height: 32rem;
+      max-height: 75vh;
       @include box-flex($direction: column, $alingHorizontal: flex-start);
       margin: 0;
       padding: 1em 1em 0 1em;

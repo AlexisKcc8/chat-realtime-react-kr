@@ -1,0 +1,14 @@
+@import "./partials/box-flex";
+.container-sedMessage {
+  width: 100%;
+  @include box-flex;
+  padding: 0.9rem;
+  background-color: #f0f2f5;
+  &__input-msg {
+    width: 85%;
+    padding: 1rem 0.5rem;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+  }
+}

@@ -1,7 +1,7 @@
 import "../styles/InputIcon.scss";
 export const InputIcon = (props) => {
   const {
-    srcImg,
+    srcImg = "",
     altImg,
     type = "text",
     isRequired = true,

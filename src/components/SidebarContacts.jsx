@@ -1,7 +1,6 @@
 import "../styles/SidebarContacts.scss";
 
 import { Toolbar } from "./Toolbar";
-import { contacts } from "../database/contacts-fake";
 import { ItemContact } from "./ItemContact";
 import { HeaderContacs } from "./HeaderContacs";
 import { InputIcon } from "./InputIcon";
@@ -116,35 +115,33 @@ export const SidebarContacts = () => {
 
   return (
     <aside className="side-contacts">
-      <div className="container-header">
+      <header className="container-header">
         <HeaderContacs />
-      </div>
-      <div className="container-input-search-filter">
-        <form onSubmit={handleSearch} className="container-input-search">
-          <InputIcon
-            srcImg="/icons/icon-glass.svg"
-            altImg="icon-glass"
-            type="text"
-            placeholder="Busca un chat o inicia uno nuevo"
-            value={userName}
-            className="search-user"
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </form>
-        <img src="/icons/icon-glass.svg" alt="" />
-      </div>
-      {err && <span>User not found!</span>}
+        <div className="container-input-search-filter">
+          <form onSubmit={handleSearch} className="container-input-search">
+            <InputIcon
+              type="text"
+              placeholder="Busca un chat o inicia uno nuevo"
+              value={userName}
+              className="search-user"
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </form>
+          <img src="/icons/icon-glass.svg" alt="" />
+        </div>
+      </header>
       <section className="container-chats">
-        <div style={{ backgroundColor: "#d1ffedcc" }}>
+        {err && <span>User not found!</span>}
+        <div className="container-chats__content-user-found">
           {user ? (
-            <div>
-              <h5 style={{ textAlign: "center" }}>Usario Encontrado</h5>
+            <div className="container-chats__user-found">
+              <h3>Usario Encontrado</h3>
               <ItemContact contact={user} eventClick={handleSelectChat} />
             </div>
           ) : null}
         </div>
         <ul className="container-chats__list">
-          {chats != undefined
+          {chats
             ? Object.entries(chats)
                 ?.sort((a, b) => b[1].date - a[1].date)
                 .map((chat) => (
@@ -160,9 +157,9 @@ export const SidebarContacts = () => {
             : null}
         </ul>
       </section>
-      <div className="container-footer">
+      <footer className="container-footer">
         <Toolbar />
-      </div>
+      </footer>
     </aside>
   );
 };

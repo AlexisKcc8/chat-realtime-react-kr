@@ -1,19 +1,7 @@
 @import "./partials/media-queries";
 .container-home-chat {
   @include querie-compu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // background-color: rgb(253, 126, 126);
-  }
-  .home-chat-side-contact {
-    @include querie-compu {
-      width: 30%;
-    }
-  }
-  .home-chat-side-conversation {
-    @include querie-compu {
-      width: 70%;
-    }
+    display: grid;
+    grid-template-columns: 30% 1fr;
   }
 }
