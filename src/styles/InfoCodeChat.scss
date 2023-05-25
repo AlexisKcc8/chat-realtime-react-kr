@@ -1,0 +1,32 @@
+@import "./partials/box-flex";
+@import "./partials/variables";
+@import "./partials/media-queries";
+.container-info-codechat {
+  display: none;
+  @include querie-compu {
+    min-height: 100vh;
+    background-color: $bgSecondary;
+    @include box-flex($direction: column);
+
+    &__img-and-text {
+      width: 100%;
+      @include box-flex($direction: column, $gap: 0);
+      text-align: center;
+
+      .title {
+        font-size: 4rem;
+        margin: 0;
+        color: #667781;
+      }
+      .description {
+        font-size: 1.1rem;
+        color: #667781;
+      }
+    }
+    &__text-cifrado {
+      .description {
+        color: #667781;
+      }
+    }
+  }
+}

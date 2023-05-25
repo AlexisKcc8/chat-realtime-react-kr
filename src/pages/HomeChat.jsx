@@ -1,6 +1,5 @@
 import { SidebarContacts } from "../components/SidebarContacts";
 import { SidebarConversations } from "../components/SidebarConversations";
-import { Toolbar } from "../components/Toolbar";
 
 import "../styles/HomeChat.scss";
 export const HomeChat = () => {

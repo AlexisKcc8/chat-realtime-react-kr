@@ -2,12 +2,13 @@
 @import "./partials/box-flex";
 @import "./partials/media-queries";
 .side-conversation {
+  // display: none;
   min-height: 100vh;
   overflow: hidden;
-  @include box-flex($direction: column, $gap: 0);
+
   .container-conversation {
     width: 100%;
-    // min-height: 100vh;
+
     flex-grow: 1;
     background-image: url("/images/fondo-star-words.jpg");
     background-position: center;

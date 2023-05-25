@@ -6,6 +6,9 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 import "../styles/HeaderApp.scss";
+import { IconLogout } from "./icons/IconLogout";
+import { IconMessage } from "./icons/IconMessage";
+import { IconCamera } from "./icons/IconCamera";
 export const HeaderContacs = () => {
   // const { userID } = auth.currentUser;
   const { currentUser } = useContext(AuthContext);
@@ -24,13 +27,15 @@ export const HeaderContacs = () => {
         </article>
 
         <article className="header-title-and-icons__buttons-icons">
-          <ButtonIcon srcImg="/icons/icon-camera.svg" altImg="icon-camera" />
-          <ButtonIcon srcImg="/icons/icon-glass.svg" altImg="icon-glass" />
-          <ButtonIcon
-            srcImg="/icons/icon-more.svg"
-            altImg="icon-more"
-            event={() => signOut(auth)}
-          />
+          <ButtonIcon>
+            <IconCamera bgColor="#fff" />
+          </ButtonIcon>
+          <ButtonIcon>
+            <IconMessage bgColor="#fff" />
+          </ButtonIcon>
+          <ButtonIcon event={() => signOut(auth)}>
+            <IconLogout bgColor="#fff" />
+          </ButtonIcon>
         </article>
       </section>
     </header>

@@ -20,6 +20,7 @@ import {
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
+import { ButtonIcon } from "./ButtonIcon";
 export const SidebarContacts = () => {
   const [user, setUser] = useState(null);
   const [userName, setUserName] = useState("");
@@ -57,10 +58,8 @@ export const SidebarContacts = () => {
         collection(dbFirestore, "users"),
         where("displayName", "==", userName)
       );
-      // console.log(q);
       const querySnapShot = await getDocs(q);
       querySnapShot.forEach((doc) => {
-        // console.log(doc.data());
         setUser(doc.data());
       });
     } catch (myErr) {
@@ -127,7 +126,11 @@ export const SidebarContacts = () => {
               onChange={(e) => setUserName(e.target.value)}
             />
           </form>
-          <img src="/icons/icon-glass.svg" alt="" />
+          <ButtonIcon
+            srcImg={"/icons/icon-glass.svg"}
+            altImg={"button-sear-user"}
+            event={handleSearch}
+          />
         </div>
       </header>
       <section className="container-chats">
@@ -136,6 +139,7 @@ export const SidebarContacts = () => {
           {user ? (
             <div className="container-chats__user-found">
               <h3>Usario Encontrado</h3>
+              <span>"Seleccionalo para agregarlo a tu feed"</span>
               <ItemContact contact={user} eventClick={handleSelectChat} />
             </div>
           ) : null}

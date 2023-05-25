@@ -19,6 +19,14 @@
     .container-input-search {
       width: 80%;
     }
+
+    &__btn-search {
+      background-color: transparent;
+      border: none;
+      :hover {
+        cursor: pointer;
+      }
+    }
   }
 
   .container-chats {
@@ -32,6 +40,10 @@
     &__user-found {
       text-align: center;
       padding: 0.5rem 0 0 0;
+      span {
+        font-size: 0.75rem;
+        font-weight: bold;
+      }
     }
     &__list {
       padding: 0;

@@ -9,6 +9,7 @@ import { SedMessage } from "./SedMessage";
 
 import { ChatContext } from "../context/ChatContext";
 import { ItemMessage } from "./ItemMessage";
+import { InfoCodeChat } from "./InfoCodeChat";
 export const SidebarConversations = () => {
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
@@ -21,18 +22,24 @@ export const SidebarConversations = () => {
       unSub();
     };
   }, [data.chatId]);
-
+  console.log(data);
   return (
-    <section className="side-conversation">
-      <HeaderConversation />
-      <section className="container-conversation">
-        <ul className="container-conversation__list">
-          {messages.map((m) => (
-            <ItemMessage key={window.crypto.randomUUID()} message={m} />
-          ))}
-        </ul>
-      </section>
-      <SedMessage />
+    <section>
+      {data.chatId == "null" ? (
+        <InfoCodeChat />
+      ) : (
+        <div className="side-conversation">
+          <HeaderConversation />
+          <section className="container-conversation">
+            <ul className="container-conversation__list">
+              {messages.map((m) => (
+                <ItemMessage key={window.crypto.randomUUID()} message={m} />
+              ))}
+            </ul>
+          </section>
+          <SedMessage />
+        </div>
+      )}
     </section>
   );
 };

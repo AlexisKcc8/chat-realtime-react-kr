@@ -17,7 +17,7 @@ export const ItemContact = (props) => {
       <section className="item-contact__section-info">
         <article className="container-name-hour">
           <h4 className="container-name-hour__name">{displayName}</h4>
-          <span className="container-name-hour__hour">12:00pm</span>
+          <h4 className="container-name-hour__hour">12:00pm</h4>
         </article>
         {lastMessage ? (
           <p className="item-contact__section-info-last-message">
