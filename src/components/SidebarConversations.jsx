@@ -22,22 +22,28 @@ export const SidebarConversations = () => {
       unSub();
     };
   }, [data.chatId]);
-  console.log(data);
+  // console.log(data);
   return (
     <section>
       {data.chatId == "null" ? (
         <InfoCodeChat />
       ) : (
         <div className="side-conversation">
-          <HeaderConversation />
+          <div className="container-header">
+            <HeaderConversation />
+          </div>
           <section className="container-conversation">
             <ul className="container-conversation__list">
-              {messages.map((m) => (
-                <ItemMessage key={window.crypto.randomUUID()} message={m} />
-              ))}
+              {messages
+                ? messages.map((m) => (
+                    <ItemMessage key={window.crypto.randomUUID()} message={m} />
+                  ))
+                : null}
             </ul>
           </section>
-          <SedMessage />
+          <div className="container-footer">
+            <SedMessage />
+          </div>
         </div>
       )}
     </section>

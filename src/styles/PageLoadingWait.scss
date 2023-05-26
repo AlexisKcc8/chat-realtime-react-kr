@@ -1,0 +1,28 @@
+@import "./partials/variables";
+@import "./partials/box-flex";
+@import "./partials/media-queries";
+.container-page-loading {
+  background-color: #000000cc;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 900;
+  padding: 10rem 0 0 0;
+  color: #fff;
+  @include box-flex($direction: column, $alingHorizontal: start);
+  &__title,
+  &__description {
+    margin: 0;
+  }
+
+  &__title {
+    text-align: center;
+  }
+  &__description {
+    text-align: center;
+    color: #f0f0f0;
+    font-size: 1.2rem;
+  }
+}

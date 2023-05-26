@@ -2,6 +2,8 @@
 @import "./partials/media-queries";
 .container-login-register {
   font-size: 1.5rem;
+  position: relative;
+
   @include querie-compu {
     font-size: 1.7rem;
   }

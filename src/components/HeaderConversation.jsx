@@ -1,7 +1,10 @@
-import { useContext } from "react";
 import "../styles/HeaderApp.scss";
+import { useContext } from "react";
 import { ButtonIcon } from "./ButtonIcon";
 import { ChatContext } from "../context/ChatContext";
+import { IconPrev } from "./icons/IconPrev";
+import { IconMessage } from "./icons/IconMessage";
+import { IconCamera } from "./icons/IconCamera";
 export const HeaderConversation = () => {
   const { data } = useContext(ChatContext);
   const { uid, displayName, photoURL } = data.user;
@@ -10,25 +13,17 @@ export const HeaderConversation = () => {
     <header className="header">
       <section className="header-title-and-icons">
         <article className="header-title-and-avatar">
-          {/* <img src="/icons/icon-prev.svg" alt="icon-prev" /> */}
-          {uid ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                className="header-title-and-avatar__img-avatar"
-                src={photoURL}
-                alt={`user: ${displayName}`}
-              />
-              <h3 className="">{displayName}</h3>
-            </div>
-          ) : (
-            <h2>CodeChat</h2>
-          )}
+          <div className="header-title-and-avatar__btn-prev">
+            <ButtonIcon>
+              <IconPrev bgColor="#fff" />
+            </ButtonIcon>
+          </div>
+          <img
+            className="header-title-and-avatar__img-avatar"
+            src={photoURL}
+            alt={`user: ${displayName}`}
+          />
+          <h3 className="">{displayName}</h3>
         </article>
 
         {uid ? (

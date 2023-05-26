@@ -1,36 +1,40 @@
-import React, { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 
 export const ItemMessage = (props) => {
   const { message } = props;
-  const { id, date, msg, senderId } = message;
 
-  function toDateTime(secs) {
-    var t = new Date(1970, 0, 1); // Epoch
-    t.setSeconds(secs);
-    return t;
-  }
+  const { id, date, img, msg, senderId } = message;
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+
+  const lastMessage = useRef();
+
+  useEffect(() => {
+    lastMessage.current?.scrollIntoView({ behavior: "smooth" });
+  }, [message]);
+
   return (
     <li
+      ref={lastMessage}
       className={`item-message ${
         senderId === currentUser.uid ? "sent" : "received"
       }`}
     >
-      <div className="item-message__content">
-        <p>{msg}</p>
-        <img
-          className="item-message__content-img"
-          src={
-            senderId === currentUser.uid
-              ? currentUser.photoURL
-              : data.user.photoURL
-          }
-        />
-      </div>
+      {img ? (
+        <div className="content-item-img-message">
+          <img className="content-item-img-message__img" src={img} alt="" />
+        </div>
+      ) : null}
+      {msg ? (
+        <div className="content-item-message">
+          <p>{msg}</p>
+          {/* <span>now</span> */}
+        </div>
+      ) : null}
+
       {/* <span>{toDateTime(date.seconds)}</span> */}
     </li>
   );

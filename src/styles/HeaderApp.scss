@@ -1,5 +1,6 @@
 @import "./partials/variables";
 @import "./partials/box-flex";
+@import "./partials/media-queries";
 
 .header {
   background-color: $color-text-thirty;
@@ -16,6 +17,11 @@
     @include box-flex($alingHorizontal: space-between);
     .header-title-and-avatar {
       @include box-flex($gap: 0);
+      &__btn-prev {
+        @include querie-compu {
+          display: none;
+        }
+      }
       &__img-avatar {
         width: 3em;
         height: 3em;

@@ -1,14 +1,26 @@
 @import "./partials/box-flex";
+@import "./partials/variables";
 .container-sedMessage {
   width: 100%;
   @include box-flex;
-  padding: 0.9rem;
+  padding: 1rem 0.5rem;
   background-color: #f0f2f5;
   &__input-msg {
-    width: 85%;
-    padding: 1rem 0.5rem;
+    width: 60%;
+    padding: 1rem 0.8rem;
     border: none;
     outline: none;
     border-radius: 10px;
+  }
+  &__btn-send-msg {
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    margin: 0;
+    background-color: $color-text-thirty;
+    :hover {
+      cursor: pointer;
+    }
   }
 }
