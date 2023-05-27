@@ -1,15 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { ChatContext } from "../context/ChatContext";
 
 export const ItemMessage = (props) => {
   const { message } = props;
-
   const { id, date, img, msg, senderId } = message;
-
   const { currentUser } = useContext(AuthContext);
-  const { data } = useContext(ChatContext);
-
   const lastMessage = useRef();
 
   useEffect(() => {

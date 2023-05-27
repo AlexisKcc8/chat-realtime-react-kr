@@ -9,7 +9,7 @@ export const PageLoadingWait = () => {
 
       <p className="container-page-loading__description">
         Estamos configurando el usuario y la contraseña para la creación de su
-        cuenta. podra acceder en breve.
+        cuenta. Podra acceder en breve.
       </p>
     </section>
   );
