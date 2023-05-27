@@ -22,7 +22,6 @@ export const SidebarConversations = () => {
       unSub();
     };
   }, [data.chatId]);
-  console.log(data);
   return (
     <section>
       {data.chatId == "null" ? (

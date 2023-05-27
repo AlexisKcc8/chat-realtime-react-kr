@@ -23,7 +23,11 @@ export const SedMessage = () => {
   const inputMessage = useRef(null);
   const handleSend = async (e) => {
     e.preventDefault();
-    // console.log(img);
+
+    if (msg == "" && img == null)
+      return alert(
+        "por favor, escriba un mensaje antes de presionar el boton de enviar"
+      );
     if (img) {
       const storageRef = ref(storage, window.crypto.randomUUID());
 
