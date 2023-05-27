@@ -9,11 +9,19 @@ import "../styles/HeaderApp.scss";
 import { IconLogout } from "./icons/IconLogout";
 import { IconMessage } from "./icons/IconMessage";
 import { IconCamera } from "./icons/IconCamera";
+import { ChatContext } from "../context/ChatContext";
 export const HeaderContacs = () => {
   // const { userID } = auth.currentUser;
   const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+  const { dispatch } = useContext(ChatContext);
+
   const { photoURL, displayName } = currentUser;
 
+  const singOutUser = () => {
+    signOut(auth);
+    dispatch({ type: "LOGOUT" });
+  };
   return (
     <header className="header">
       <section className="header-title-and-icons">
@@ -33,7 +41,7 @@ export const HeaderContacs = () => {
           <ButtonIcon>
             <IconMessage bgColor="#fff" />
           </ButtonIcon>
-          <ButtonIcon event={() => signOut(auth)}>
+          <ButtonIcon event={singOutUser}>
             <IconLogout bgColor="#fff" />
           </ButtonIcon>
         </article>

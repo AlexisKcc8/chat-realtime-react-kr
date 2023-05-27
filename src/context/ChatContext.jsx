@@ -9,6 +9,7 @@ export const ChatContextProvider = ({ children }) => {
   };
   const { currentUser } = useContext(AuthContext);
   const chatReducer = (state, action) => {
+    console.log(action.type);
     switch (action.type) {
       case "CHANGE_USER":
         return {
@@ -18,7 +19,11 @@ export const ChatContextProvider = ({ children }) => {
               ? currentUser.uid + action.payload.uid
               : action.payload.uid + currentUser.uid,
         };
-
+      case "LOGOUT":
+        return {
+          chatId: "null",
+          user: {},
+        };
       default:
         return state;
     }

@@ -47,6 +47,7 @@ export const SingIn = () => {
 
       navigate("/");
     } catch (error) {
+      console.log(error);
       setErrorLogin(true);
     }
   };
