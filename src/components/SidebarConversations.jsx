@@ -1,27 +1,14 @@
 import "../styles/SidebarConversation.scss";
-import { useContext, useEffect, useState } from "react";
-import { dbFirestore } from "../firebase/firebase-config";
-
-import { onSnapshot, doc } from "firebase/firestore";
 
 import { HeaderConversation } from "./HeaderConversation";
 import { SedMessage } from "./SedMessage";
-
-import { ChatContext } from "../context/ChatContext";
 import { ItemMessage } from "./ItemMessage";
 import { InfoCodeChat } from "./InfoCodeChat";
-export const SidebarConversations = () => {
-  const [messages, setMessages] = useState([]);
-  const { data } = useContext(ChatContext);
-  useEffect(() => {
-    const unSub = onSnapshot(doc(dbFirestore, "chats", data.chatId), (doc) => {
-      doc.exists() && setMessages(doc.data().messages);
-    });
 
-    return () => {
-      unSub();
-    };
-  }, [data.chatId]);
+import { useConversation } from "../hooks/useConversation";
+export const SidebarConversations = () => {
+  const { messages, data } = useConversation();
+
   return (
     <section>
       {data.chatId == "null" ? (
