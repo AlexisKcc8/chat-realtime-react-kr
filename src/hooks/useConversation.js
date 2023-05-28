@@ -43,11 +43,8 @@ export const useConversation = () => {
 
   const handleScrollUp = () => {
     if (containerSideChats.current) {
-      const container = containerSideChats.current;
-      container.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      const chatContainer = containerSideChats.current;
+      chatContainer.scrollTop = 0;
     }
   };
   const scrollChatToBottom = () => {
