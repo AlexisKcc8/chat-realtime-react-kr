@@ -7,7 +7,7 @@ import { InfoCodeChat } from "../pages/InfoCodeChat";
 
 import { useConversation } from "../hooks/useConversation";
 export const SidebarConversations = () => {
-  const { messages, data } = useConversation();
+  const { messages, data, containerChat } = useConversation();
 
   return (
     <section>
@@ -19,7 +19,7 @@ export const SidebarConversations = () => {
             <HeaderConversation />
           </div>
           <section className="container-conversation">
-            <ul className="container-conversation__list">
+            <ul className="container-conversation__list" ref={containerChat}>
               {messages
                 ? messages.map((m) => (
                     <ItemMessage key={window.crypto.randomUUID()} message={m} />

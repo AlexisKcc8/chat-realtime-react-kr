@@ -5,15 +5,14 @@ export const ItemMessage = (props) => {
   const { message } = props;
   const { id, date, img, msg, senderId } = message;
   const { currentUser } = useContext(AuthContext);
-  const lastMessage = useRef();
+  // const lastMessage = useRef();
 
-  useEffect(() => {
-    lastMessage.current?.scrollIntoView({ block: "start", behavior: "smooth" });
-  }, [message]);
+  // useEffect(() => {
+  //   lastMessage.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  // }, [message]);
 
   return (
     <li
-      ref={lastMessage}
       className={`item-message ${
         senderId === currentUser.uid ? "sent" : "received"
       }`}

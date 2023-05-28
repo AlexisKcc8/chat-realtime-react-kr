@@ -33,6 +33,7 @@
       height: 100%;
       @include box-flex($direction: column, $alingHorizontal: flex-start);
       overflow: scroll;
+      scroll-behavior: smooth;
       padding: 0 1rem;
       margin: 0;
       border: 1px solid red;

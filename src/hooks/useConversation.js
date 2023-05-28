@@ -18,6 +18,7 @@ export const useConversation = () => {
   const { currentUser } = useContext(AuthContext);
 
   const inputMessage = useRef(null);
+  const containerChat = useRef(null);
 
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
@@ -33,6 +34,17 @@ export const useConversation = () => {
       unSub();
     };
   }, [data.chatId]);
+
+  useEffect(() => {
+    scrollChatToBottom();
+  }, [messages]);
+
+  const scrollChatToBottom = () => {
+    if (containerChat.current) {
+      const chatContainer = containerChat.current;
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+  };
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -93,5 +105,14 @@ export const useConversation = () => {
     setImg(null);
   };
 
-  return { messages, data, handleSend, inputMessage, msg, setMsg, setImg };
+  return {
+    messages,
+    data,
+    handleSend,
+    inputMessage,
+    msg,
+    setMsg,
+    setImg,
+    containerChat,
+  };
 };
