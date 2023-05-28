@@ -3,10 +3,10 @@ import { useContext } from "react";
 import { ButtonIcon } from "./ButtonIcon";
 import { ChatContext } from "../context/ChatContext";
 import { IconPrev } from "./icons/IconPrev";
-import { IconMessage } from "./icons/IconMessage";
-import { IconCamera } from "./icons/IconCamera";
+import { ReferenceContext } from "../context/ReferenceContext";
 export const HeaderConversation = () => {
   const { data } = useContext(ChatContext);
+  const { toggleSideConversations } = useContext(ReferenceContext);
   const { uid, displayName, photoURL } = data.user;
 
   return (
@@ -14,7 +14,7 @@ export const HeaderConversation = () => {
       <section className="header-title-and-icons">
         <article className="header-title-and-avatar">
           <div className="header-title-and-avatar__btn-prev">
-            <ButtonIcon>
+            <ButtonIcon event={toggleSideConversations}>
               <IconPrev bgColor="#fff" />
             </ButtonIcon>
           </div>

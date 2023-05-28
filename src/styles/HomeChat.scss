@@ -4,7 +4,11 @@
     display: grid;
     grid-template-columns: 30% 1fr;
   }
-  .home-chat-side-contact {
-    display: block;
+  .toggle-side-contacts-conversations {
+    display: none;
+
+    @include querie-compu {
+      display: block;
+    }
   }
 }

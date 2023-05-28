@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { dbFirestore } from "../firebase/firebase-config";
 import {
   collection,
@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
+import { ReferenceContext } from "../context/ReferenceContext";
 
 export const useContacts = () => {
   const [user, setUser] = useState(null);
@@ -21,6 +22,7 @@ export const useContacts = () => {
   const [err, setErr] = useState(false);
   const [chats, setChats] = useState([]);
 
+  const { toggleSideContacts } = useContext(ReferenceContext);
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
@@ -103,6 +105,7 @@ export const useContacts = () => {
   };
 
   const handleSelectConversation = (chat) => {
+    toggleSideContacts();
     dispatch({ type: "CHANGE_USER", payload: chat });
   };
 

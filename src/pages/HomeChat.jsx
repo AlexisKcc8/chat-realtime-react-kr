@@ -1,17 +1,17 @@
-import { useRef } from "react";
+import "../styles/HomeChat.scss";
+
 import { SidebarContacts } from "../components/SidebarContacts";
 import { SidebarConversations } from "../components/SidebarConversations";
-
-import "../styles/HomeChat.scss";
+import { useContext } from "react";
+import { ReferenceContext } from "../context/ReferenceContext";
 export const HomeChat = () => {
-  const sideContacts = useRef();
-  const sideConversation = useRef();
+  const { sideContacts, sideConversations } = useContext(ReferenceContext);
   return (
     <section className="container-home-chat">
-      <div ref={sideContacts} className="home-chat-side-contact">
+      <div className="home-chat-side-contact" ref={sideContacts}>
         <SidebarContacts />
       </div>
-      <div ref={sideConversation} className="home-chat-side-conversation">
+      <div className="home-chat-side-conversation" ref={sideConversations}>
         <SidebarConversations />
       </div>
     </section>

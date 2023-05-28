@@ -3,7 +3,7 @@ import "../styles/SidebarConversation.scss";
 import { HeaderConversation } from "./HeaderConversation";
 import { SedMessage } from "./SedMessage";
 import { ItemMessage } from "./ItemMessage";
-import { InfoCodeChat } from "./InfoCodeChat";
+import { InfoCodeChat } from "../pages/InfoCodeChat";
 
 import { useConversation } from "../hooks/useConversation";
 export const SidebarConversations = () => {

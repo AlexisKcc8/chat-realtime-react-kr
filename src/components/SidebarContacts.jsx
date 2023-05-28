@@ -6,6 +6,7 @@ import { HeaderContacs } from "./HeaderContacs";
 import { InputIcon } from "./InputIcon";
 import { ButtonIcon } from "./ButtonIcon";
 import { useContacts } from "../hooks/useContacts";
+import { useHomeChat } from "../hooks/useHomeChat";
 export const SidebarContacts = () => {
   const {
     handleSearch,

@@ -1,15 +1,14 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useRef } from "react";
 import { AuthContext } from "./AuthContext";
-
+const INITIAL_STATE = {
+  chatId: "null",
+  user: {},
+};
 export const ChatContext = createContext();
 export const ChatContextProvider = ({ children }) => {
-  const INITIAL_STATE = {
-    chatId: "null",
-    user: {},
-  };
   const { currentUser } = useContext(AuthContext);
+
   const chatReducer = (state, action) => {
-    console.log(action.type);
     switch (action.type) {
       case "CHANGE_USER":
         return {
