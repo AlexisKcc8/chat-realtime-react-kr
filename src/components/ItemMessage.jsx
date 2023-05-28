@@ -8,7 +8,7 @@ export const ItemMessage = (props) => {
   const lastMessage = useRef();
 
   useEffect(() => {
-    lastMessage.current?.scrollIntoView({ behavior: "smooth" });
+    lastMessage.current?.scrollIntoView({ block: "start", behavior: "smooth" });
   }, [message]);
 
   return (
