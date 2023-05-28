@@ -2,7 +2,6 @@
 @import "./partials/box-flex";
 @import "./partials/media-queries";
 .side-conversation {
-  // display: none;
   position: relative;
   overflow: hidden;
   height: 100vh;
@@ -25,18 +24,20 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    max-height: 80vh;
+    max-height: 75vh;
     overflow: scroll;
     display: flex;
+    align-items: flex-start;
 
     &__list {
       width: 100%;
       @include box-flex($direction: column, $alingHorizontal: flex-start);
       overflow: scroll;
-      padding: 1.5rem 1rem;
+      padding: 0 1rem;
       margin: 0;
+
       @include querie-compu {
-        padding: 1.5rem 2rem;
+        padding: 0 2rem;
       }
       .item-message {
         max-width: 80%;
@@ -73,8 +74,9 @@
   }
   .container-footer {
     width: 100%;
+
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
     left: 0;
   }
 }

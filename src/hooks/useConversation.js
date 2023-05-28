@@ -89,7 +89,7 @@ export const useConversation = () => {
       });
     }
     setMsg("");
-    inputMessage.current?.focus();
+    // inputMessage.current?.focus();
     setImg(null);
   };
 
