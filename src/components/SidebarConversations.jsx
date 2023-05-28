@@ -7,19 +7,23 @@ import { InfoCodeChat } from "../pages/InfoCodeChat";
 
 import { useConversation } from "../hooks/useConversation";
 export const SidebarConversations = () => {
-  const { messages, data, containerChat } = useConversation();
+  const { messages, data, containerMessages, containerSideChats } =
+    useConversation();
 
   return (
     <section>
       {data.chatId == "null" ? (
         <InfoCodeChat />
       ) : (
-        <div className="side-conversation">
+        <div className="side-conversation" ref={containerSideChats}>
           <div className="container-header">
             <HeaderConversation />
           </div>
           <section className="container-conversation">
-            <ul className="container-conversation__list" ref={containerChat}>
+            <ul
+              className="container-conversation__list"
+              ref={containerMessages}
+            >
               {messages
                 ? messages.map((m) => (
                     <ItemMessage key={window.crypto.randomUUID()} message={m} />

@@ -18,7 +18,8 @@ export const useConversation = () => {
   const { currentUser } = useContext(AuthContext);
 
   const inputMessage = useRef(null);
-  const containerChat = useRef(null);
+  const containerMessages = useRef(null);
+  const containerSideChats = useRef(null);
 
   const [messages, setMessages] = useState([]);
   const { data } = useContext(ChatContext);
@@ -37,11 +38,21 @@ export const useConversation = () => {
 
   useEffect(() => {
     scrollChatToBottom();
+    handleScrollUp();
   }, [messages]);
 
+  const handleScrollUp = () => {
+    if (containerSideChats.current) {
+      const container = containerSideChats.current;
+      container.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
   const scrollChatToBottom = () => {
-    if (containerChat.current) {
-      const chatContainer = containerChat.current;
+    if (containerMessages.current) {
+      const chatContainer = containerMessages.current;
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
   };
@@ -113,6 +124,7 @@ export const useConversation = () => {
     msg,
     setMsg,
     setImg,
-    containerChat,
+    containerMessages,
+    containerSideChats,
   };
 };

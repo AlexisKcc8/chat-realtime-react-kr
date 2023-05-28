@@ -24,8 +24,7 @@
     width: 100%;
     padding: 0;
     margin: 0;
-    height: 75vh;
-    border: 1px solid blue;
+    height: 76vh;
     display: flex;
 
     &__list {
@@ -36,7 +35,6 @@
       scroll-behavior: smooth;
       padding: 0 1rem;
       margin: 0;
-      border: 1px solid red;
 
       @include querie-compu {
         padding: 0 2rem;
