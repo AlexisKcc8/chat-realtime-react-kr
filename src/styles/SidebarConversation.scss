@@ -22,7 +22,7 @@
     left: 0;
   }
   .container-conversation {
-    // width: 100%;
+    width: 100%;
     padding: 0;
     margin: 0;
     max-height: 80vh;
@@ -33,13 +33,21 @@
       width: 100%;
       @include box-flex($direction: column, $alingHorizontal: flex-start);
       overflow: scroll;
+      padding: 1.5rem 1rem;
+      margin: 0;
+      @include querie-compu {
+        padding: 1.5rem 2rem;
+      }
       .item-message {
         max-width: 80%;
         @include box-flex($direction: column);
-        font-size: 0.9rem;
+        font-size: 1rem;
         padding: 0.2rem 0.7rem;
         list-style: none;
         overflow-wrap: break-word;
+        @include querie-compu {
+          font-size: 1.1rem;
+        }
         .content-item-img-message {
           width: 17rem;
           height: 17rem;
@@ -55,19 +63,16 @@
         align-self: flex-start;
         background-color: #ffffff;
         border-radius: 0 20px 20px 20px;
-        margin: 0 0 0 0.3rem;
       }
       .sent {
         align-self: flex-end;
         background-color: #acfcc7;
         border-radius: 20px 0 20px 20px;
-        margin: 0 0.3rem 0 0;
       }
     }
   }
   .container-footer {
     width: 100%;
-    // background-color: #f0f2f5;
     position: absolute;
     bottom: 0px;
     left: 0;

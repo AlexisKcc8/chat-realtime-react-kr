@@ -1,5 +1,6 @@
 @import "./partials/box-flex";
 @import "./partials/variables";
+@import "./partials/media-queries";
 .container-sedMessage {
   width: 100%;
   @include box-flex;
@@ -11,6 +12,10 @@
     border: none;
     outline: none;
     border-radius: 10px;
+
+    @include querie-compu {
+      width: 80%;
+    }
   }
   &__btn-send-msg {
     width: 3rem;
