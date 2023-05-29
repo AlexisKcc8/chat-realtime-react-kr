@@ -38,33 +38,47 @@ export const Register = () => {
   const formSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const { username, email, password, photo } = newUser;
+    let { username, email, password, photo } = newUser;
+    let userName = username.toLowerCase();
 
+    if (photo == null) {
+      let isAccept = confirm(
+        "No añadiste una foto de perfil, se te agregara una imagen por defecto. Estas de acuerdo?"
+      );
+
+      if (isAccept) {
+        photo = await loadImgDefect();
+      } else {
+        setLoading(false);
+        return;
+      }
+    }
     try {
       //create user
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
       //Create a unique image name
       const date = new Date().getTime();
-      const storageRef = ref(storage, `${username + date}`);
+      const storageRef = ref(storage, `${userName + date}`);
 
       await uploadBytesResumable(storageRef, photo).then(() => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
             //update profile
             await updateProfile(res.user, {
-              displayName: username,
+              displayName: userName,
               photoURL: downloadURL,
             });
             //create user on firestore
             await setDoc(doc(dbFirestore, "users", res.user.uid), {
               uid: res.user.uid,
-              displayName: username,
+              displayName: userName,
               email,
               photoURL: downloadURL,
             });
             //create empty user chats on firestore
             await setDoc(doc(dbFirestore, "userChats", res.user.uid), {});
+            //si no existe ningun problema, redirigimos a home
             navigate("/");
           } catch (err) {
             console.log(err);
@@ -80,6 +94,7 @@ export const Register = () => {
       setLoading(false);
     }
   };
+
   const inputChange = (e) => {
     let data = null;
     let prop = e.target.name;
@@ -93,6 +108,14 @@ export const Register = () => {
     });
   };
 
+  const loadImgDefect = async () => {
+    let imageUrl = "/images/robotito.jpg";
+    let fileName = "image.jpg";
+    let response = await fetch(imageUrl);
+    let data = await response.blob();
+    let fileImg = new File([data], fileName, { type: "image/jpeg" });
+    return fileImg;
+  };
   return (
     <>
       <section className="container-login-register">
@@ -134,6 +157,7 @@ export const Register = () => {
               type="file"
               name="photo"
               onChange={inputChange}
+              isRequired={false}
               id="input-file-avatar"
             />
           </div>
