@@ -17,7 +17,6 @@ export const SidebarContacts = () => {
     chats,
     err,
   } = useContacts();
-
   return (
     <aside className="side-contacts">
       <header className="container-header">
@@ -46,13 +45,11 @@ export const SidebarContacts = () => {
               <span>"Seleccionalo para agregarlo a tu feed"</span>
               <ItemContact contact={user} eventClick={handleSelectChat} />
             </div>
-          ) : (
-            err && (
-              <div className="container-chats__user-found container-chats__user-found--not">
-                <h3>Usuario no encontrado</h3>
-              </div>
-            )
-          )}
+          ) : err ? (
+            <div className="container-chats__user-found container-chats__user-found--not">
+              <h3>Usuario no encontrado</h3>
+            </div>
+          ) : null}
         </div>
         <ul className="container-chats__list">
           {chats

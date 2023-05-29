@@ -29,6 +29,16 @@ export const useContacts = () => {
   const { dispatch } = useContext(ChatContext);
 
   useEffect(() => {
+    // Establece un temporizador para cambiar el estado después de 2 segundos
+    const temporizador = setTimeout(() => {
+      setErr(false);
+    }, 2000);
+
+    // Limpia el temporizador si el componente se desmonta antes de que se cumplan los 2 segundos
+    return () => clearTimeout(temporizador);
+  }, [err]);
+
+  useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(
         doc(dbFirestore, "userChats", currentUser.uid),
@@ -58,14 +68,13 @@ export const useContacts = () => {
       const querySnapShot = await getDocs(q);
       if (querySnapShot.empty) {
         // No se encontró ningún usuario con el UID proporcionado
-        throw new Error("Usuario no encontrado");
+        throw new Error(true);
       }
       querySnapShot.forEach((doc) => {
         setUser(doc.data());
       });
     } catch (myErr) {
       setErr(myErr);
-      setUser(null);
     }
   };
 
@@ -107,6 +116,7 @@ export const useContacts = () => {
 
     setUser(null);
     setUserName("");
+    setErr(false);
   };
 
   const handleSelectConversation = (chat) => {
