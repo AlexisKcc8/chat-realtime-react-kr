@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { dbFirestore } from "../firebase/firebase-config";
+
 import {
   collection,
   query,
@@ -12,6 +13,7 @@ import {
   doc,
   onSnapshot,
 } from "firebase/firestore";
+
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from "../context/ChatContext";
 import { ReferenceContext } from "../context/ReferenceContext";
@@ -48,19 +50,22 @@ export const useContacts = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
     try {
       const q = query(
         collection(dbFirestore, "users"),
-        where("displayName", "==", userName)
+        where("displayName", "==", userName.toLocaleLowerCase())
       );
       const querySnapShot = await getDocs(q);
+      if (querySnapShot.empty) {
+        // No se encontró ningún usuario con el UID proporcionado
+        throw new Error("Usuario no encontrado");
+      }
       querySnapShot.forEach((doc) => {
         setUser(doc.data());
       });
     } catch (myErr) {
-      console.log(myErr);
       setErr(myErr);
+      setUser(null);
     }
   };
 

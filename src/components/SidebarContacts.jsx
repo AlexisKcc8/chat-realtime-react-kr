@@ -25,7 +25,6 @@ export const SidebarContacts = () => {
         <div className="container-input-search-filter">
           <form onSubmit={handleSearch} className="container-input-search">
             <InputIcon
-              type="text"
               placeholder="Busca un chat o inicia uno nuevo"
               value={userName}
               className="search-user"
@@ -40,15 +39,20 @@ export const SidebarContacts = () => {
         </div>
       </header>
       <section className="container-chats">
-        {err && <span>User not found!</span>}
         <div className="container-chats__content-user-found">
           {user ? (
             <div className="container-chats__user-found">
-              <h3>Usario Encontrado</h3>
+              <h3>Usuario Encontrado</h3>
               <span>"Seleccionalo para agregarlo a tu feed"</span>
               <ItemContact contact={user} eventClick={handleSelectChat} />
             </div>
-          ) : null}
+          ) : (
+            err && (
+              <div className="container-chats__user-found container-chats__user-found--not">
+                <h3>Usuario no encontrado</h3>
+              </div>
+            )
+          )}
         </div>
         <ul className="container-chats__list">
           {chats

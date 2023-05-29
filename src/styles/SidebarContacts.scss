@@ -15,6 +15,7 @@
     width: 100%;
     @include box-flex;
     padding: 0.2rem 1rem;
+    margin: 0.5rem 0;
 
     .container-input-search {
       width: 80%;
@@ -39,11 +40,15 @@
     }
     &__user-found {
       text-align: center;
-      padding: 0.5rem 0 0 0;
+      padding: 0.5rem 0;
       span {
         font-size: 0.75rem;
         font-weight: bold;
       }
+    }
+    &__user-found--not {
+      background-color: red;
+      color: #ffff;
     }
     &__list {
       padding: 0;
