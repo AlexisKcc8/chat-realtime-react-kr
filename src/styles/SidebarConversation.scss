@@ -41,19 +41,23 @@
       }
       .item-message {
         max-width: 80%;
+
         @include box-flex($direction: column);
-        font-size: 1rem;
+        font-size: 0.95rem;
         padding: 0.2rem 0.7rem;
         list-style: none;
-        overflow-wrap: break-word;
+
         @include querie-compu {
           font-size: 1.1rem;
         }
         .content-item-message {
           @include box-flex($direction: column, $gap: 0);
+          width: 100%;
           align-items: flex-start;
           &__text {
             margin: 0 0 0.4rem 0;
+            max-width: 100%;
+            word-wrap: break-word;
           }
           &__hour {
             font-size: 0.75rem;
