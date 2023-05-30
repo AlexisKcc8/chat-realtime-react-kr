@@ -17,6 +17,7 @@ export const SidebarContacts = () => {
     chats,
     err,
   } = useContacts();
+
   return (
     <aside className="side-contacts">
       <header className="container-header">
@@ -59,7 +60,8 @@ export const SidebarContacts = () => {
                   <ItemContact
                     key={chat[0]}
                     contact={chat[1].userInfo}
-                    lastMessage={chat[1].lastMessage?.msg}
+                    lastMessage={chat[1].lastMessage?.msgText}
+                    lastHour={chat[1].date?.seconds}
                     eventClick={() =>
                       handleSelectConversation(chat[1].userInfo)
                     }

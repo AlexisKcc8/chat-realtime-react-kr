@@ -1,15 +1,11 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { secondsToHour } from "../helpers/Hours";
 
 export const ItemMessage = (props) => {
   const { message } = props;
-  const { id, date, img, msg, senderId } = message;
+  const { id, date, msgImage, msgText, senderId } = message;
   const { currentUser } = useContext(AuthContext);
-  // const lastMessage = useRef();
-
-  // useEffect(() => {
-  //   lastMessage.current?.scrollIntoView({ block: "start", behavior: "smooth" });
-  // }, [message]);
 
   return (
     <li
@@ -17,15 +13,21 @@ export const ItemMessage = (props) => {
         senderId === currentUser.uid ? "sent" : "received"
       }`}
     >
-      {img ? (
+      {msgImage ? (
         <div className="content-item-img-message">
-          <img className="content-item-img-message__img" src={img} alt="" />
+          <img
+            className="content-item-img-message__img"
+            src={msgImage}
+            alt=""
+          />
         </div>
       ) : null}
-      {msg ? (
+      {msgText ? (
         <div className="content-item-message">
-          <p>{msg}</p>
-          {/* <span>now</span> */}
+          <p className="content-item-message__text">{msgText}</p>
+          <span className="content-item-message__hour">
+            {secondsToHour(date.seconds)}
+          </span>
         </div>
       ) : null}
 

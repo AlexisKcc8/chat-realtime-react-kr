@@ -1,5 +1,6 @@
+import "../styles/SingIn.scss";
 //hooks
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 //firebase
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -13,14 +14,8 @@ import { HeaderLoginRegister } from "../components/HeaderLoginRegister";
 import { FooterLoginRegister } from "../components/FooterLoginRegister";
 import { InputIcon } from "../components/InputIcon";
 
-import "../styles/SingIn.scss";
 import { PageLoadingWait } from "../components/PageLoadingWait";
 
-const TYPES_INPUTS_FORM = {
-  PASSWORD: "password",
-  TEXT: "text",
-  FILE: "file",
-};
 const INITIAL_STATE_USER = {
   username: "",
   email: "",

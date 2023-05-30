@@ -1,11 +1,8 @@
-import { useEffect } from "react";
 import "../styles/ItemContact.scss";
+import { secondsToHour } from "../helpers/Hours";
 export const ItemContact = (props) => {
-  const { contact, lastMessage = "", eventClick } = props;
+  const { contact, lastMessage = "", eventClick, lastHour } = props;
   const { uid, displayName, photoURL } = contact;
-  // useEffect(() => {
-  //   console.log(contact);
-  // }, []);
 
   return (
     <li className="item-contact" onClick={eventClick}>
@@ -17,7 +14,7 @@ export const ItemContact = (props) => {
       <section className="item-contact__section-info">
         <article className="container-name-hour">
           <h4 className="container-name-hour__name">{displayName}</h4>
-          <h4 className="container-name-hour__hour">12:00pm</h4>
+          <p className="container-name-hour__hour">{secondsToHour(lastHour)}</p>
         </article>
         {lastMessage ? (
           <p className="item-contact__section-info-last-message">

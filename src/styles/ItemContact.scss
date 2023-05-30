@@ -22,7 +22,9 @@
         font-weight: 900;
       }
       &__hour {
-        color: #000;
+        margin: 0;
+        color: $color-text-last-msg;
+        font-size: 0.8rem;
       }
     }
     .item-contact__section-info-last-message {

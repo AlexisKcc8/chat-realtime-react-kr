@@ -3,26 +3,28 @@ import { Iconpaperclip } from "./icons/Iconpaperclip";
 import { IconNext } from "./icons/IconNext";
 import { useConversation } from "../hooks/useConversation";
 export const SedMessage = () => {
-  const { handleSend, inputMessage, msg, setMsg, setImg } = useConversation();
+  const { handleSend, myMessage, handleChangeInputs } = useConversation();
 
   return (
     <form onSubmit={handleSend} className="container-sedMessage">
-      <label htmlFor="file-send">
+      <label htmlFor="file-send" className="container-sedMessage__label-img">
         <Iconpaperclip />
       </label>
       <input
-        ref={inputMessage}
         className="container-sedMessage__input-msg"
         type="text"
         placeholder="Message…"
-        value={msg}
-        onChange={(e) => setMsg(e.target.value)}
+        name="msgText"
+        autoComplete="off"
+        onChange={handleChangeInputs}
+        value={myMessage.msgText}
       />
       <input
         type="file"
         id="file-send"
+        name="msgImage"
         style={{ display: "none" }}
-        onChange={(e) => setImg(e.target.files[0])}
+        onChange={handleChangeInputs}
       />
       <button className="container-sedMessage__btn-send-msg">
         <IconNext bgColor="#fff" />

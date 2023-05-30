@@ -34,8 +34,8 @@
       overflow: scroll;
       scroll-behavior: smooth;
       padding: 1rem 1rem 0 1rem;
-      margin: 0;
 
+      margin: 0;
       @include querie-compu {
         padding: 2rem 2rem 0 2rem;
       }
@@ -48,6 +48,18 @@
         overflow-wrap: break-word;
         @include querie-compu {
           font-size: 1.1rem;
+        }
+        .content-item-message {
+          @include box-flex($direction: column, $gap: 0);
+          align-items: flex-start;
+          &__text {
+            margin: 0 0 0.4rem 0;
+          }
+          &__hour {
+            font-size: 0.75rem;
+            margin: 0;
+            color: rgb(135, 135, 135);
+          }
         }
         .content-item-img-message {
           width: 17rem;
@@ -69,6 +81,13 @@
         align-self: flex-end;
         background-color: #acfcc7;
         border-radius: 20px 0 20px 20px;
+      }
+      .received .content-item-message__hour {
+        align-self: flex-end;
+      }
+      .sent .content-item-message__hour {
+        align-self: flex-end;
+        color: rgb(129, 129, 129);
       }
     }
   }

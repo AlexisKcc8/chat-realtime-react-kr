@@ -17,6 +17,11 @@
       width: 80%;
     }
   }
+  &__label-img {
+    :hover {
+      cursor: pointer;
+    }
+  }
   &__btn-send-msg {
     width: 3rem;
     height: 3rem;

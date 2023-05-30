@@ -1,3 +1,4 @@
+@import "../styles/partials/variables";
 .form-wrapper-input {
   position: relative;
   width: 100%;
@@ -18,7 +19,7 @@
     font-size: 0.7em;
     border: none;
     outline: none;
-    border-bottom: 1px solid var(--bg-color-secondary);
+    border-bottom: 1px solid $color-text-thirty;
     color: var(--color-text-thirty);
   }
 

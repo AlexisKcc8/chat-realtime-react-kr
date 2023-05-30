@@ -2,7 +2,7 @@
 @import "./partials/media-queries";
 @import "./partials/variables";
 .container-hero {
-  background-color: var(--bg-color-secondary);
+  background-color: $color-text-thirty;
   @include box-flex($direction: column);
   @include querie-compu {
     @include box-flex($direction: row);
@@ -13,7 +13,7 @@
     width: 5rem;
     height: 5rem;
     border-radius: 50%;
-    border: 5px solid var(--color-text-secondary);
+    border: 5px solid $color-text-secondary;
   }
   &__container-title-autor {
     @include box-flex($direction: column, $gap: 0);

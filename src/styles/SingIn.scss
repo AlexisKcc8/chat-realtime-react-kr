@@ -1,5 +1,6 @@
 @import "./partials/box-flex";
 @import "./partials/media-queries";
+@import "./partials/variables";
 .container-login-register {
   font-size: 1.5rem;
   position: relative;
@@ -30,14 +31,14 @@
       cursor: pointer;
     }
     &__form-button {
-      background-color: var(--bg-color-secondary);
+      background-color: $color-text-thirty;
       width: 100%;
       padding: 0.8em;
       margin: 1em 0 0 0;
       font-size: 0.7em;
       border-radius: 10px;
       border: none;
-      color: var(--color-text-secondary);
+      color: $color-text-secondary;
     }
     &__form-button:hover {
       cursor: pointer;
@@ -87,7 +88,7 @@
         height: 4rem;
         @include box-flex;
         border-radius: 50%;
-        border: 1px solid var(--bg-color-secondary);
+        border: 1px solid $color-text-thirty;
         background-color: transparent;
         overflow: hidden;
         .container-social-media__button-img {

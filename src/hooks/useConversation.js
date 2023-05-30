@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ChatContext } from "../context/ChatContext";
 import {
   serverTimestamp,
@@ -12,18 +12,20 @@ import {
 import { dbFirestore, storage } from "../firebase/firebase-config";
 import { AuthContext } from "../context/AuthContext";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-
+const INITIAL_STATE_MESSAGE = {
+  msgText: "",
+  msgImage: null,
+};
 export const useConversation = () => {
-  const [msg, setMsg] = useState("");
-  const [img, setImg] = useState(null);
   const { currentUser } = useContext(AuthContext);
+  const { data } = useContext(ChatContext);
+
+  const [myMessage, setMyMessage] = useState(INITIAL_STATE_MESSAGE);
+  const [messages, setMessages] = useState([]);
 
   const inputMessage = useRef(null);
   const containerMessages = useRef(null);
   const containerSideChats = useRef(null);
-
-  const [messages, setMessages] = useState([]);
-  const { data } = useContext(ChatContext);
 
   useEffect(() => {
     const unSub = onSnapshot(doc(dbFirestore, "chats", data.chatId), (doc) => {
@@ -39,33 +41,38 @@ export const useConversation = () => {
 
   useEffect(() => {
     scrollChatToBottom();
-    handleScrollUp();
   }, [messages]);
 
-  const handleScrollUp = () => {
-    if (containerSideChats.current) {
-      const chatContainer = containerSideChats.current;
-      chatContainer.scrollTop = 0;
-    }
-  };
   const scrollChatToBottom = () => {
     if (containerMessages.current) {
       const chatContainer = containerMessages.current;
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
   };
+  const handleChangeInputs = (e) => {
+    let data = null;
+    let prop = e.target.name;
+    data = e.target.value;
+    if (e.target.type == "file") {
+      data = e.target.files[0];
+    }
+    setMyMessage({
+      ...myMessage,
+      [prop]: data,
+    });
+  };
 
   const handleSend = async (e) => {
     e.preventDefault();
+    const { msgText, msgImage } = myMessage;
 
-    if (msg == "" && img == null)
+    if (msgText == "" && msgImage == null)
       return alert(
         "por favor, escriba un mensaje antes de presionar el boton de enviar"
       );
-    if (img) {
+    if (msgImage) {
       const storageRef = ref(storage, window.crypto.randomUUID());
-
-      const uploadTask = uploadBytesResumable(storageRef, img);
+      const uploadTask = uploadBytesResumable(storageRef, msgImage);
 
       uploadTask.on(
         (error) => {
@@ -76,10 +83,10 @@ export const useConversation = () => {
             await updateDoc(doc(dbFirestore, "chats", data.chatId), {
               messages: arrayUnion({
                 id: window.crypto.randomUUID(),
-                msg,
+                msgText,
                 senderId: currentUser.uid,
                 date: Timestamp.now(),
-                img: downloadURL,
+                msgImage: downloadURL,
               }),
             });
           });
@@ -89,7 +96,7 @@ export const useConversation = () => {
       await updateDoc(doc(dbFirestore, "chats", data.chatId), {
         messages: arrayUnion({
           id: window.crypto.randomUUID(),
-          msg,
+          msgText,
           senderId: currentUser.uid,
           date: Timestamp.now(),
         }),
@@ -97,21 +104,19 @@ export const useConversation = () => {
 
       await updateDoc(doc(dbFirestore, "userChats", currentUser.uid), {
         [data.chatId + ".lastMessage"]: {
-          msg,
+          msgText,
         },
         [data.chatId + ".date"]: serverTimestamp(),
       });
 
       await updateDoc(doc(dbFirestore, "userChats", data.user.uid), {
         [data.chatId + ".lastMessage"]: {
-          msg,
+          msgText,
         },
         [data.chatId + ".date"]: serverTimestamp(),
       });
     }
-    setMsg("");
-    // inputMessage.current?.focus();
-    setImg(null);
+    setMyMessage(INITIAL_STATE_MESSAGE);
   };
 
   return {
@@ -119,9 +124,8 @@ export const useConversation = () => {
     data,
     handleSend,
     inputMessage,
-    msg,
-    setMsg,
-    setImg,
+    myMessage,
+    handleChangeInputs,
     containerMessages,
     containerSideChats,
   };
