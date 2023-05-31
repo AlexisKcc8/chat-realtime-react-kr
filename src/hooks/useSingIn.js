@@ -23,7 +23,7 @@ export const useSingIn = () => {
   useEffect(() => {
     const hiddenErroMessage = setTimeout(() => {
       setErrorLogin(false);
-    }, 3000);
+    }, 4000);
 
     return () => {
       clearTimeout(hiddenErroMessage);
