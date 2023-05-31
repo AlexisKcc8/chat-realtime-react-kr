@@ -27,6 +27,10 @@
         font-size: 0.7em;
       }
     }
+    &__text-img-load {
+      margin: 0;
+      font-size: 1.1rem;
+    }
     &__label-avatar:hover {
       cursor: pointer;
     }
@@ -39,6 +43,12 @@
       border-radius: 10px;
       border: none;
       color: $color-text-secondary;
+    }
+    &__msg-error {
+      margin: 0.5rem 0 0 0;
+      font-size: 0.9rem;
+      text-align: center;
+      color: #ff0000;
     }
     &__form-button:hover {
       cursor: pointer;

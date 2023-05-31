@@ -1,116 +1,22 @@
 import "../styles/SingIn.scss";
 //hooks
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-//firebase
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
-
-import { auth, dbFirestore, storage } from "../firebase/firebase-config";
-
+import { Link } from "react-router-dom";
 //mis componentes
 import { HeaderLoginRegister } from "../components/HeaderLoginRegister";
 import { FooterLoginRegister } from "../components/FooterLoginRegister";
 import { InputIcon } from "../components/InputIcon";
-
 import { PageLoadingWait } from "../components/PageLoadingWait";
-
-const INITIAL_STATE_USER = {
-  username: "",
-  email: "",
-  password: "",
-  photo: null,
-};
+import { useRegister } from "../hooks/useRegister";
 
 export const Register = () => {
-  const [newUser, setNewUser] = useState(INITIAL_STATE_USER);
-  const [loading, setLoading] = useState(false);
-  const [errorLogin, setErrorLogin] = useState(false);
-
-  const navigate = useNavigate();
-
-  const formSubmit = async (e) => {
-    setLoading(true);
-    e.preventDefault();
-    let { username, email, password, photo } = newUser;
-    let userName = username.toLowerCase();
-
-    if (photo == null) {
-      let isAccept = confirm(
-        "No añadiste una foto de perfil, se te agregara una imagen por defecto. Estas de acuerdo?"
-      );
-
-      if (isAccept) {
-        photo = await loadImgDefect();
-      } else {
-        setLoading(false);
-        return;
-      }
-    }
-    try {
-      //create user
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-
-      //Create a unique image name
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${userName + date}`);
-
-      await uploadBytesResumable(storageRef, photo).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            //update profile
-            await updateProfile(res.user, {
-              displayName: userName,
-              photoURL: downloadURL,
-            });
-            //create user on firestore
-            await setDoc(doc(dbFirestore, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName: userName,
-              email,
-              photoURL: downloadURL,
-            });
-            //create empty user chats on firestore
-            await setDoc(doc(dbFirestore, "userChats", res.user.uid), {});
-            //si no existe ningun problema, redirigimos a home
-            navigate("/");
-          } catch (err) {
-            console.log(err);
-            setErrorLogin(true);
-          } finally {
-            setLoading(false);
-          }
-        });
-      });
-    } catch (error) {
-      console.log(error);
-      setErrorLogin(true);
-      setLoading(false);
-    }
-  };
-
-  const inputChange = (e) => {
-    let data = null;
-    let prop = e.target.name;
-    data = e.target.value;
-    if (e.target.type == "file") {
-      data = e.target.files[0];
-    }
-    setNewUser({
-      ...newUser,
-      [prop]: data,
-    });
-  };
-
-  const loadImgDefect = async () => {
-    let imageUrl = "/images/robotito.jpg";
-    let fileName = "image.jpg";
-    let response = await fetch(imageUrl);
-    let data = await response.blob();
-    let fileImg = new File([data], fileName, { type: "image/jpeg" });
-    return fileImg;
-  };
+  const {
+    newUser,
+    formSubmit,
+    inputChange,
+    loading,
+    errorLogin,
+    isLoadImgUser,
+  } = useRegister();
   return (
     <>
       <section className="container-login-register">
@@ -143,6 +49,7 @@ export const Register = () => {
             type="password"
             placeholder="Password"
             name="password"
+            minlength={8}
             onChange={inputChange}
             value={newUser.password}
           />
@@ -168,6 +75,10 @@ export const Register = () => {
             />
             <p className="container-form__msg-add-avatar">Add an avatar</p>
           </label>
+          {isLoadImgUser ? (
+            <p className="container-form__text-img-load">Imagen Cargada.</p>
+          ) : null}
+
           <button disabled={loading} className="container-form__form-button">
             Sing Up
           </button>

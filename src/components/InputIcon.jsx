@@ -12,6 +12,7 @@ export const InputIcon = (props) => {
     value,
     id,
     className,
+    minlength = 1,
   } = props;
   return (
     <div className="form-wrapper-input">
@@ -26,6 +27,7 @@ export const InputIcon = (props) => {
         name={name}
         onChange={onChange}
         value={value}
+        minLength={minlength}
         id={id}
         onKeyDown={onKeyDown}
       />

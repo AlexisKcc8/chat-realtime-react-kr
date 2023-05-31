@@ -1,56 +1,14 @@
-//hooks
-import { useRef, useState } from "react";
+import "../styles/SingIn.scss";
+
 //mis componentes
 import { InputIcon } from "../components/InputIcon";
 import { HeaderLoginRegister } from "../components/HeaderLoginRegister";
 import { FooterLoginRegister } from "../components/FooterLoginRegister";
-
-import "../styles/SingIn.scss";
-import { Link, useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/firebase-config";
-
-const TYPES_INPUTS_FORM = {
-  PASSWORD: "password",
-  TEXT: "text",
-  FILE: "file",
-};
-const INITIAL_STATE_USER = {
-  email: "",
-  password: "",
-};
-
+import { Link } from "react-router-dom";
+import { useSingIn } from "../hooks/useSingIn";
 export const SingIn = () => {
-  const [perfilUser, setPerfilUser] = useState(INITIAL_STATE_USER);
-  const [loading, setLoading] = useState(false);
-  const [errorLogin, setErrorLogin] = useState(false);
-
-  const navigate = useNavigate();
-
-  const inputChange = (e) => {
-    let prop = e.target.name;
-    let data = e.target.value;
-
-    setPerfilUser({
-      ...perfilUser,
-      [prop]: data,
-    });
-  };
-
-  const submitInfoUser = async (e) => {
-    e.preventDefault();
-
-    try {
-      const { email, password } = perfilUser;
-
-      await signInWithEmailAndPassword(auth, email, password);
-
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      setErrorLogin(true);
-    }
-  };
+  const { submitInfoUser, inputChange, perfilUser, loading, errorLogin } =
+    useSingIn();
   return (
     <section className="container-login-register">
       <HeaderLoginRegister />
@@ -66,7 +24,6 @@ export const SingIn = () => {
           onChange={inputChange}
           value={perfilUser.email}
         />
-
         <InputIcon
           srcImg="/icons/icon-close-pws.svg"
           altImg="icon-password-close"
@@ -76,11 +33,14 @@ export const SingIn = () => {
           onChange={inputChange}
           value={perfilUser.password}
         />
-
         <button disabled={loading} className="container-form__form-button">
           Sing Up
         </button>
-        {errorLogin ? <span>Something an error</span> : null}
+        {errorLogin ? (
+          <p className="container-form__msg-error">
+            Ocurrió un problema, revisa el usuario y la contraseña
+          </p>
+        ) : null}
       </form>
 
       <FooterLoginRegister />
