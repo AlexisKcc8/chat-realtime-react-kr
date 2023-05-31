@@ -51,7 +51,6 @@ export const useSingIn = () => {
 
       navigate("/");
     } catch (error) {
-      console.log(error);
       setErrorLogin(true);
     } finally {
       setLoading(false);

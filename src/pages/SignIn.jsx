@@ -6,13 +6,14 @@ import { HeaderLoginRegister } from "../components/HeaderLoginRegister";
 import { FooterLoginRegister } from "../components/FooterLoginRegister";
 import { Link } from "react-router-dom";
 import { useSingIn } from "../hooks/useSingIn";
+import { PageLoadingWait } from "../components/PageLoadingWait";
 export const SingIn = () => {
   const { submitInfoUser, inputChange, perfilUser, loading, errorLogin } =
     useSingIn();
   return (
     <section className="container-login-register">
+      {loading ? <PageLoadingWait title={"Accediendo a tu perfil"} /> : null}
       <HeaderLoginRegister />
-
       <form className="container-form" onSubmit={submitInfoUser}>
         <h3 className="container-form__message-info">Login</h3>
         <InputIcon

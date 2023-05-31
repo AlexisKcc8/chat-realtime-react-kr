@@ -20,7 +20,14 @@ export const Register = () => {
   return (
     <>
       <section className="container-login-register">
-        {loading ? <PageLoadingWait /> : null}
+        {loading ? (
+          <PageLoadingWait
+            title={"Espere un momento"}
+            textInfo={
+              "Estamos configurando el usuario y la contraseña para la creación de su cuenta. Podra acceder en breve."
+            }
+          />
+        ) : null}
 
         <HeaderLoginRegister />
         <form className="container-form" onSubmit={formSubmit}>
